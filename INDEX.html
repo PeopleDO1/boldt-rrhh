@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RRHH Dashboard — Grupo Boldt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  /* =============================================
+     INSTRUCCIONES PARA EDITAR ESTE DASHBOARD
+     =============================================
+     1. Busca la sección "DATOS — EDITAR AQUÍ" más abajo
+     2. Modifica los valores directamente
+     3. Guarda el archivo y compartí el link
+     ============================================= */
+
+  :root {
+    --bg: #F5F3EE;
+    --surface: #FFFFFF;
+    --surface2: #EFEDE7;
+    --ink: #1A1916;
+    --ink2: #6B6860;
+    --ink3: #9C9A93;
+    --accent: #1A4A3A;
+    --accent2: #2D7A5F;
+    --accent-light: #E8F2EE;
+    --warn: #B85C1A;
+    --warn-light: #FDF0E8;
+    --ok: #2D7A5F;
+    --ok-light: #E8F2EE;
+    --border: rgba(26,25,22,0.10);
+    --border2: rgba(26,25,22,0.06);
+    --r: 12px;
+    --r-sm: 8px;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- Header ---- */
+  .header {
+    background: var(--accent);
+    color: #fff;
+    padding: 2.5rem 3rem 2rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .header-brand { display: flex; flex-direction: column; gap: 4px; }
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+  .header-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.15;
+  }
+  .header-title em { font-style: italic; color: #8FC9B0; }
+  .header-meta {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-end;
+  }
+  .header-date {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+  }
+  .header-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.9);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.18);
+  }
+
+  /* ---- Layout ---- */
+  .main { padding: 2.5rem 3rem; max-width: 1200px; margin: 0 auto; }
+  .section { margin-bottom: 2.5rem; }
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .10em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 1rem;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border2);
+  }
+
+  /* ---- Metric cards row ---- */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+  .metric-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.25rem 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: box-shadow .15s;
+  }
+  .metric-card:hover { box-shadow: 0 4px 16px rgba(26,25,22,0.07); }
+  .metric-label { font-size: 12px; color: var(--ink2); font-weight: 400; }
+  .metric-value {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .metric-sub { font-size: 12px; color: var(--ink3); }
+  .metric-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    width: fit-content;
+  }
+  .tag-ok   { background: var(--ok-light); color: var(--ok); }
+  .tag-warn { background: var(--warn-light); color: var(--warn); }
+  .tag-neutral { background: var(--surface2); color: var(--ink2); }
+
+  /* ---- Nómina table ---- */
+  .nomina-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+  .nomina-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    padding: .75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .nomina-empresa { font-size: 13px; font-weight: 500; color: var(--ink); }
+  .nomina-empresa small { display: block; font-size: 11px; font-weight: 400; color: var(--ink3); }
+  .nomina-num {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .nomina-cct { font-size: 10px; padding: 2px 6px; border-radius: 10px; background: var(--warn-light); color: var(--warn); font-weight: 500; }
+
+  /* ---- Beneficios section ---- */
+  .beneficios-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .beneficio-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.25rem;
+  }
+  .beneficio-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink2);
+    margin-bottom: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-size: 11px;
+  }
+  .beneficio-value {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .beneficio-desc { font-size: 13px; color: var(--ink2); line-height: 1.5; }
+
+  .cobertura-bar-wrap { margin-top: 10px; }
+  .cobertura-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--ink2);
+    margin-bottom: 4px;
+  }
+  .cobertura-bar-track {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .cobertura-bar-fill {
+    height: 100%;
+    background: var(--accent2);
+    border-radius: 3px;
+    transition: width .6s ease;
+  }
+
+  /* ---- Seguros ---- */
+  .seguros-list { display: flex; flex-direction: column; gap: 8px; }
+  .seguro-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border-radius: var(--r-sm);
+    font-size: 13px;
+  }
+  .seguro-nombre { font-weight: 500; color: var(--ink); }
+  .seguro-det { color: var(--ink2); font-size: 12px; }
+  .seguro-status { font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 20px; }
+
+  /* ---- Proyecto status ---- */
+  .proyecto-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 10px;
+  }
+  .proyecto-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .proyecto-nombre { font-weight: 500; font-size: 15px; }
+  .proyecto-desc { font-size: 13px; color: var(--ink2); margin-bottom: 12px; }
+  .proyecto-hitos { display: flex; flex-direction: column; gap: 6px; }
+  .hito {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--ink2);
+  }
+  .hito-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-done { background: var(--ok); }
+  .dot-active { background: var(--warn); }
+  .dot-pending { background: var(--border); border: 1.5px solid var(--ink3); }
+
+  /* ---- Litigios ---- */
+  .litigio-card {
+    background: var(--warn-light);
+    border: 1px solid rgba(184,92,26,0.20);
+    border-radius: var(--r);
+    padding: 1.25rem 1.5rem;
+  }
+  .litigio-case { font-weight: 500; font-size: 15px; color: var(--warn); margin-bottom: 4px; }
+  .litigio-det { font-size: 13px; color: #7A3D10; line-height: 1.6; }
+
+  /* ---- Footer ---- */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--ink3);
+    background: var(--surface);
+  }
+  .footer-brand { font-weight: 500; color: var(--ink2); }
+
+  /* ---- Edit hint (solo visible en modo edición) ---- */
+  .edit-hint {
+    background: #FFF8E7;
+    border: 1px dashed #E6C34A;
+    border-radius: var(--r-sm);
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #7A6010;
+    margin-bottom: 1.5rem;
+    display: none; /* Cambiar a 'block' si querés ver las instrucciones al abrir */
+  }
+
+  @media (max-width: 700px) {
+    .header { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
+    .header-meta { text-align: left; align-items: flex-start; }
+    .main { padding: 1.5rem; }
+    .beneficios-grid { grid-template-columns: 1fr; }
+    .header-title { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     DATOS — EDITAR AQUÍ
+     Modifica los valores entre comillas o números según corresponda
+     ============================================================ -->
+<script>
+const DATA = {
+
+  /* ---- Encabezado ---- */
+  periodo: "Mayo 2026",
+  actualizacion: "26 de mayo de 2026",
+  consultor: "Patricio Vezza — People DO HR Consulting",
+
+  /* ---- KPIs resumen ---- */
+  totalEmpleados: 1004,
+  empresas: 11,
+  empleadosAtsa: 41,
+  convenioCount: 3,          // cantidad de empresas con CCT
+
+  /* ---- Nómina por empresa ---- */
+  /* formato: { nombre, empleados, cct: true/false, detalle } */
+  nomina: [
+    { nombre: "Boldt SA",              empleados: 285, cct: true,  detalle: "CCT vigente" },
+    { nombre: "B-Gaming",              empleados: 276, cct: false, detalle: "" },
+    { nombre: "Boldt Impresores",      empleados: 91,  cct: true,  detalle: "CCT vigente" },
+    { nombre: "UTE Bold Digital",      empleados: 74,  cct: false, detalle: "BPlay" },
+    { nombre: "SPTI",                  empleados: 64,  cct: false, detalle: "" },
+    { nombre: "ATSA",                  empleados: 41,  cct: false, detalle: "Integrándose" },
+    { nombre: "Orbith",                empleados: 42,  cct: false, detalle: "" },
+    { nombre: "Boldt Tech",            empleados: 43,  cct: false, detalle: "" },
+    { nombre: "UTE Boldt Gaming",      empleados: 35,  cct: false, detalle: "BPlay" },
+    { nombre: "UTE Fuente Mayor",      empleados: 30,  cct: false, detalle: "BPlay" },
+    { nombre: "Tonnjes Sud SA",        empleados: 0,   cct: true,  detalle: "CCT vigente" },
+    { nombre: "Tomhe",                 empleados: 23,  cct: false, detalle: "" },
+  ],
+
+  /* ---- Beneficios ---- */
+  /* Total empleados en el relevamiento: 40 (sep 2025) */
+  totalRelevados: 40,
+  coberturaRelevada: true,
+
+  /* Lista de beneficios con cantidad y % reales del xlsx */
+  beneficiosList: [
+    { nombre: "Gimnasio Wellhub",        cantidad: 40, pct: 100,  area: "Bienestar" },
+    { nombre: "Almuerzo",                cantidad: 38, pct: 95,   area: "Alimentación" },
+    { nombre: "Línea celular",           cantidad: 27, pct: 67.5, area: "Conectividad" },
+    { nombre: "Prepaga titular",         cantidad: 31, pct: 77.5, area: "Salud" },
+    { nombre: "Prepaga grupo familiar",  cantidad: 10, pct: 25,   area: "Salud" },
+    { nombre: "Esquema híbrido 3×2",     cantidad: 13, pct: 32.5, area: "Flexibilidad" },
+    { nombre: "Bono performance",        cantidad: 9,  pct: 22.5, area: "Compensación" },
+    { nombre: "Auto compañía",           cantidad: 6,  pct: 15,   area: "Movilidad" },
+    { nombre: "Estacionamiento",         cantidad: 4,  pct: 10,   area: "Movilidad" },
+    { nombre: "Alquiler vivienda",       cantidad: 1,  pct: 2.5,  area: "Vivienda" },
+    { nombre: "Esquema híbrido 2×3",     cantidad: 1,  pct: 2.5,  area: "Flexibilidad" },
+    { nombre: "Esquema híbrido 4×1",     cantidad: 1,  pct: 2.5,  area: "Flexibilidad" },
+  ],
+
+  /* ---- Seguros ---- */
+  /* estado: "vigente" | "a verificar" | "vencido" */
+  seguros: [
+    { nombre: "ART",               proveedor: "A confirmar",                    estado: "a verificar", detalle: "Evaluar migración a ASOCIART" },
+    { nombre: "Seguro de vida",    proveedor: "Instituto Asegurador Mercantil", estado: "vigente",     detalle: "Seguros de ley" },
+    { nombre: "Póliza Prevención", proveedor: "A confirmar",                    estado: "a verificar", detalle: "Pendiente compartir con Rodo" },
+  ],
+
+  /* ---- Proyectos activos ---- */
+  /* estadoHito: "done" | "active" | "pending" */
+  proyectos: [
+    {
+      nombre: "Integración ATSA — Grupo Boldt",
+      estado: "En curso",
+      estadoColor: "warn",
+      descripcion: "Homogeneización de procesos de RRHH, administración de personal y liquidación.",
+      hitos: [
+        { texto: "Reunión de kick-off con Rodo",       estado: "done"    },
+        { texto: "Relevamiento de nómina y beneficios",estado: "done"    },
+        { texto: "Exclusión de empleada convenio comercio", estado: "active" },
+        { texto: "Matriz de Nómina MasterFile",        estado: "active"  },
+        { texto: "Comunicación a equipos",             estado: "pending" },
+        { texto: "Legajos físicos organizados",        estado: "pending" },
+      ]
+    },
+    {
+      nombre: "Proyecto Payroll Visma",
+      estado: "Por iniciar",
+      estadoColor: "neutral",
+      descripcion: "Migración completa a Visma Payroll. Go-live objetivo noviembre 2026.",
+      hitos: [
+        { texto: "Definición alcance con M. Ferrante",  estado: "active"  },
+        { texto: "Matriz MasterFile como insumo base",  estado: "pending" },
+        { texto: "Liquidación paralela (julio 2026)",   estado: "pending" },
+        { texto: "Go-live con Crowe (noviembre 2026)",  estado: "pending" },
+      ]
+    },
+  ],
+
+  /* ---- Litigios ---- */
+  /* dejar vacío el array si no hay juicios: litigios: [] */
+  litigios: [
+    {
+      caso: "Bettatis c/ ATSA",
+      descripcion: "Diferencia en base de cálculo indemnizatorio. Inicio: mayo 2026. Estudio actuante: Chaufen — en intercambio de documentación."
+    },
+  ],
+
+};
+</script>
+<!-- ============================================================
+     FIN DE LA SECCIÓN DE DATOS
+     No modificar el código debajo de esta línea
+     ============================================================ -->
+
+<header class="header">
+  <div class="header-brand">
+    <span class="header-eyebrow">Grupo Boldt · Recursos Humanos</span>
+    <h1 class="header-title">Dashboard <em>RRHH</em></h1>
+  </div>
+  <div class="header-meta">
+    <span class="header-date" id="hdr-actualizacion"></span>
+    <span class="header-badge" id="hdr-periodo"></span>
+    <span class="header-date" id="hdr-consultor" style="margin-top:2px"></span>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="edit-hint">
+    ✏️ <strong>Modo edición:</strong> modificá los valores en la sección DATA al inicio del archivo y guardá. El dashboard se actualiza automáticamente.
+  </div>
+
+  <!-- Métricas resumen -->
+  <section class="section">
+    <div class="section-label">Resumen del Grupo</div>
+    <div class="metrics-row" id="metrics-row"></div>
+  </section>
+
+  <!-- Nómina por empresa -->
+  <section class="section">
+    <div class="section-label">Nómina por sociedad</div>
+    <div class="nomina-grid" id="nomina-grid"></div>
+  </section>
+
+  <!-- Beneficios -->
+  <section class="section">
+    <div class="section-label">Beneficios del personal</div>
+    <div class="beneficios-grid" id="beneficios-grid"></div>
+  </section>
+
+  <!-- Seguros -->
+  <section class="section">
+    <div class="section-label">Seguros</div>
+    <div class="seguros-list" id="seguros-list"></div>
+  </section>
+
+  <!-- Proyectos -->
+  <section class="section">
+    <div class="section-label">Proyectos activos</div>
+    <div id="proyectos-list"></div>
+  </section>
+
+  <!-- Litigios -->
+  <section class="section" id="litigios-section">
+    <div class="section-label">Litigios laborales en curso</div>
+    <div id="litigios-list"></div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span class="footer-brand" id="footer-consultor"></span>
+  <span id="footer-date"></span>
+</footer>
+
+<script>
+(function() {
+  /* ---- Header ---- */
+  document.getElementById('hdr-periodo').textContent = DATA.periodo;
+  document.getElementById('hdr-actualizacion').textContent = 'Actualizado: ' + DATA.actualizacion;
+  document.getElementById('hdr-consultor').textContent = DATA.consultor;
+  document.getElementById('footer-consultor').textContent = DATA.consultor;
+  document.getElementById('footer-date').textContent = DATA.actualizacion;
+
+  /* ---- Métricas resumen ---- */
+  const metrics = [
+    { label: 'Total empleados', value: DATA.totalEmpleados.toLocaleString('es-AR'), sub: 'Grupo Boldt', tag: null },
+    { label: 'Sociedades', value: DATA.empresas, sub: 'empresas del grupo', tag: null },
+    { label: 'ATSA', value: DATA.empleadosAtsa, sub: 'empleados en integración', tag: { text: 'En proceso', cls: 'tag-warn' } },
+    { label: 'Con CCT', value: DATA.convenioCount, sub: 'sociedades bajo convenio', tag: { text: 'Activo', cls: 'tag-warn' } },
+  ];
+  const mr = document.getElementById('metrics-row');
+  metrics.forEach(m => {
+    mr.innerHTML += `<div class="metric-card">
+      <span class="metric-label">${m.label}</span>
+      <span class="metric-value">${m.value}</span>
+      <span class="metric-sub">${m.sub}</span>
+      ${m.tag ? `<span class="metric-tag ${m.tag.cls}">${m.tag.text}</span>` : ''}
+    </div>`;
+  });
+
+  /* ---- Nómina ---- */
+  const ng = document.getElementById('nomina-grid');
+  const sorted = [...DATA.nomina].sort((a,b) => b.empleados - a.empleados);
+  sorted.forEach(e => {
+    ng.innerHTML += `<div class="nomina-row">
+      <div class="nomina-empresa">
+        ${e.nombre}
+        ${e.detalle ? `<small>${e.detalle}</small>` : ''}
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+        <span class="nomina-num">${e.empleados || '—'}</span>
+        ${e.cct ? '<span class="nomina-cct">CCT</span>' : ''}
+      </div>
+    </div>`;
+  });
+
+  /* ---- Beneficios ---- */
+  const bg = document.getElementById('beneficios-grid');
+  bg.style.display = 'block';
+  const totalBeneficios = DATA.beneficiosList.length;
+  const universales = DATA.beneficiosList.filter(b => b.pct === 100).length;
+  const areaColors = {
+    "Salud":         { bg: "#E8F2EE", text: "#1A5C42" },
+    "Bienestar":     { bg: "#E8F2EE", text: "#1A5C42" },
+    "Alimentación":  { bg: "#EEF5E8", text: "#3B6D11" },
+    "Conectividad":  { bg: "#E6F0FB", text: "#0C447C" },
+    "Flexibilidad":  { bg: "#F0EDFE", text: "#3C3489" },
+    "Compensación":  { bg: "#FDF0E8", text: "#7A3D10" },
+    "Movilidad":     { bg: "#F0EDE8", text: "#5F5E5A" },
+    "Vivienda":      { bg: "#F5F0E8", text: "#633806" },
+  };
+  const barsHTML = DATA.beneficiosList.map(b => {
+    const ac = areaColors[b.area] || { bg: "var(--surface2)", text: "var(--ink2)" };
+    return `<div style="display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--border2)">
+      <div style="min-width:175px;font-size:13px;font-weight:500;color:var(--ink)">${b.nombre}</div>
+      <div style="flex:1;height:7px;background:var(--surface2);border-radius:4px;overflow:hidden">
+        <div style="height:100%;width:${b.pct}%;background:var(--accent2);border-radius:4px"></div>
+      </div>
+      <div style="min-width:36px;text-align:right;font-size:13px;font-weight:500;color:var(--ink2)">${b.cantidad}</div>
+      <div style="min-width:40px;text-align:right;font-size:12px;color:var(--ink3)">${b.pct}%</div>
+      <span style="font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:${ac.bg};color:${ac.text};min-width:88px;text-align:center;display:inline-block">${b.area}</span>
+    </div>`;
+  }).join('');
+  bg.innerHTML = `<div class="beneficio-card" style="grid-column:1/-1">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
+      <div>
+        <div class="beneficio-title">Mapa de beneficios — ATSA</div>
+        <div style="font-size:12px;color:var(--ink3);margin-top:2px">Relevamiento sep. 2025 · ${DATA.totalRelevados} empleados</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="metric-tag tag-ok">${totalBeneficios} beneficios activos</span>
+        <span class="metric-tag tag-neutral">${universales} universal${universales > 1 ? 'es' : ''}</span>
+        <span class="metric-tag tag-ok">Relevamiento completo</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;padding:0 0 6px;border-bottom:2px solid var(--border)">
+      <div style="min-width:175px;font-size:11px;font-weight:500;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em">Beneficio</div>
+      <div style="flex:1;font-size:11px;font-weight:500;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em">Cobertura</div>
+      <div style="min-width:36px;text-align:right;font-size:11px;color:var(--ink3)">#</div>
+      <div style="min-width:40px;text-align:right;font-size:11px;color:var(--ink3)">%</div>
+      <div style="min-width:88px;font-size:11px;color:var(--ink3)"></div>
+    </div>
+    ${barsHTML}
+  </div>`;
+
+
+
+  /* ---- Seguros ---- */
+  const sl = document.getElementById('seguros-list');
+  DATA.seguros.forEach(s => {
+    const isOk = s.estado === 'vigente';
+    const cls = isOk ? 'tag-ok' : 'tag-warn';
+    const label = isOk ? 'Vigente' : 'A verificar';
+    sl.innerHTML += `<div class="seguro-row">
+      <div>
+        <span class="seguro-nombre">${s.nombre}</span>
+        <span class="seguro-det" style="margin-left:8px">${s.proveedor}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:12px;color:var(--ink2)">${s.detalle}</span>
+        <span class="metric-tag ${cls}">${label}</span>
+      </div>
+    </div>`;
+  });
+
+  /* ---- Proyectos ---- */
+  const pl = document.getElementById('proyectos-list');
+  DATA.proyectos.forEach(p => {
+    const tagCls = p.estadoColor === 'warn' ? 'tag-warn' : p.estadoColor === 'ok' ? 'tag-ok' : 'tag-neutral';
+    const hitosHTML = p.hitos.map(h => {
+      const dotCls = h.estado === 'done' ? 'dot-done' : h.estado === 'active' ? 'dot-active' : 'dot-pending';
+      const textStyle = h.estado === 'done' ? 'text-decoration:line-through;opacity:.5' : '';
+      return `<div class="hito">
+        <span class="hito-dot ${dotCls}"></span>
+        <span style="${textStyle}">${h.texto}</span>
+      </div>`;
+    }).join('');
+    pl.innerHTML += `<div class="proyecto-card">
+      <div class="proyecto-header">
+        <span class="proyecto-nombre">${p.nombre}</span>
+        <span class="metric-tag ${tagCls}">${p.estado}</span>
+      </div>
+      <p class="proyecto-desc">${p.descripcion}</p>
+      <div class="proyecto-hitos">${hitosHTML}</div>
+    </div>`;
+  });
+
+  /* ---- Litigios ---- */
+  const ll = document.getElementById('litigios-list');
+  if (!DATA.litigios || DATA.litigios.length === 0) {
+    document.getElementById('litigios-section').style.display = 'none';
+  } else {
+    DATA.litigios.forEach(l => {
+      ll.innerHTML += `<div class="litigio-card">
+        <div class="litigio-case">${l.caso}</div>
+        <div class="litigio-det">${l.descripcion}</div>
+      </div>`;
+    });
+  }
+})();
+</script>
+</body>
+</html>
