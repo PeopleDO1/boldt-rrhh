@@ -334,7 +334,7 @@ const DATA = {
 
   /* ---- Encabezado ---- */
   periodo: "Mayo 2026",
-  actualizacion: "26 de mayo de 2026",
+  actualizacion: "27 de mayo de 2026",
   consultor: "Patricio Vezza — People DO HR Consulting",
 
   /* ---- KPIs resumen ---- */
@@ -361,24 +361,33 @@ const DATA = {
   ],
 
   /* ---- Beneficios ---- */
-  /* Total empleados en el relevamiento: 40 (sep 2025) */
-  totalRelevados: 40,
+  /* Total empleados en el relevamiento: 41 (mayo 2026) */
+  totalRelevados: 41,
   coberturaRelevada: true,
 
-  /* Lista de beneficios con cantidad y % reales del xlsx */
+  /* Lista de beneficios con cantidad y % reales del xlsx — mayo 2026 */
   beneficiosList: [
-    { nombre: "Gimnasio Wellhub",        cantidad: 40, pct: 100,  area: "Bienestar" },
-    { nombre: "Almuerzo",                cantidad: 38, pct: 95,   area: "Alimentación" },
-    { nombre: "Línea celular",           cantidad: 27, pct: 67.5, area: "Conectividad" },
-    { nombre: "Prepaga titular",         cantidad: 31, pct: 77.5, area: "Salud" },
-    { nombre: "Prepaga grupo familiar",  cantidad: 10, pct: 25,   area: "Salud" },
-    { nombre: "Esquema híbrido 3×2",     cantidad: 13, pct: 32.5, area: "Flexibilidad" },
-    { nombre: "Bono performance",        cantidad: 9,  pct: 22.5, area: "Compensación" },
-    { nombre: "Auto compañía",           cantidad: 6,  pct: 15,   area: "Movilidad" },
-    { nombre: "Estacionamiento",         cantidad: 4,  pct: 10,   area: "Movilidad" },
-    { nombre: "Alquiler vivienda",       cantidad: 1,  pct: 2.5,  area: "Vivienda" },
-    { nombre: "Esquema híbrido 2×3",     cantidad: 1,  pct: 2.5,  area: "Flexibilidad" },
-    { nombre: "Esquema híbrido 4×1",     cantidad: 1,  pct: 2.5,  area: "Flexibilidad" },
+    { nombre: "Gimnasio Wellhub",        cantidad: 41, pct: 100,  area: "Bienestar" },
+    { nombre: "Almuerzo",                cantidad: 38, pct: 92.7, area: "Alimentación" },
+    { nombre: "Prepaga titular",         cantidad: 36, pct: 87.8, area: "Salud" },
+    { nombre: "Línea celular",           cantidad: 24, pct: 58.5, area: "Conectividad" },
+    { nombre: "Esquema híbrido 3×2",     cantidad: 16, pct: 39.0, area: "Flexibilidad" },
+    { nombre: "Prepaga grupo familiar",  cantidad: 10, pct: 24.4, area: "Salud" },
+    { nombre: "Bono performance",        cantidad: 9,  pct: 22.0, area: "Compensación" },
+    { nombre: "Auto compañía",           cantidad: 5,  pct: 12.2, area: "Movilidad" },
+    { nombre: "Estacionamiento",         cantidad: 4,  pct: 9.8,  area: "Movilidad" },
+    { nombre: "Esquema híbrido 2×3",     cantidad: 4,  pct: 9.8,  area: "Flexibilidad" },
+    { nombre: "Alquiler vivienda",       cantidad: 1,  pct: 2.4,  area: "Vivienda" },
+    { nombre: "Esquema híbrido 4×1",     cantidad: 1,  pct: 2.4,  area: "Flexibilidad" },
+  ],
+
+  /* ---- Demografía ---- */
+  edadPromedio: 41.8,
+  antiguedadPromedio: 4.8,
+  rangoEdades: [
+    { label: "Menores de 30", cantidad: 3,  pct: 7.3  },
+    { label: "30 a 45 años",  cantidad: 27, pct: 65.9 },
+    { label: "Mayores de 45", cantidad: 11, pct: 26.8 },
   ],
 
   /* ---- Seguros ---- */
@@ -470,6 +479,13 @@ const DATA = {
   <section class="section">
     <div class="section-label">Beneficios del personal</div>
     <div class="beneficios-grid" id="beneficios-grid"></div>
+  </section>
+
+  <!-- Demografía -->
+  <section class="section">
+    <div class="section-label">Demografía — ATSA</div>
+    <div class="metrics-row" id="demo-metrics"></div>
+    <div class="beneficio-card" id="demo-rangos" style="margin-top:0"></div>
   </section>
 
   <!-- Seguros -->
@@ -608,7 +624,35 @@ const DATA = {
     </div>`;
   });
 
-  /* ---- Proyectos ---- */
+  /* ---- Demografía ---- */
+  if (DATA.edadPromedio) {
+    const dm = document.getElementById('demo-metrics');
+    dm.innerHTML = `
+      <div class="metric-card">
+        <span class="metric-label">Edad promedio</span>
+        <span class="metric-value">${DATA.edadPromedio}</span>
+        <span class="metric-sub">años</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-label">Antigüedad promedio</span>
+        <span class="metric-value">${DATA.antiguedadPromedio}</span>
+        <span class="metric-sub">años en la empresa</span>
+      </div>`;
+
+    const dr = document.getElementById('demo-rangos');
+    const rangosHTML = DATA.rangoEdades.map(r => `
+      <div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border2)">
+        <div style="min-width:140px;font-size:13px;font-weight:500;color:var(--ink)">${r.label}</div>
+        <div style="flex:1;height:7px;background:var(--surface2);border-radius:4px;overflow:hidden">
+          <div style="height:100%;width:${r.pct}%;background:var(--accent);border-radius:4px"></div>
+        </div>
+        <div style="min-width:32px;text-align:right;font-size:13px;font-weight:500;color:var(--ink2)">${r.cantidad}</div>
+        <div style="min-width:44px;text-align:right;font-size:12px;color:var(--ink3)">${r.pct}%</div>
+      </div>`).join('');
+    dr.innerHTML = `<div class="beneficio-title">Distribución por edad</div>${rangosHTML}`;
+  }
+
+
   const pl = document.getElementById('proyectos-list');
   DATA.proyectos.forEach(p => {
     const tagCls = p.estadoColor === 'warn' ? 'tag-warn' : p.estadoColor === 'ok' ? 'tag-ok' : 'tag-neutral';
