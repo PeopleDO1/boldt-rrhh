@@ -356,8 +356,7 @@ const DATA = {
     { nombre: "Boldt Tech",            empleados: 43,  cct: false, detalle: "" },
     { nombre: "UTE Boldt Gaming",      empleados: 35,  cct: false, detalle: "BPlay" },
     { nombre: "UTE Fuente Mayor",      empleados: 30,  cct: false, detalle: "BPlay" },
-    { nombre: "Tonnjes Sud SA",        empleados: 0,   cct: true,  detalle: "CCT vigente" },
-    { nombre: "Tomhe",                 empleados: 23,  cct: false, detalle: "" },
+    { nombre: "Tonnjes Sud SA",        empleados: 23,  cct: true,  detalle: "CCT vigente" },
   ],
 
   /* ---- Beneficios ---- */
@@ -403,7 +402,7 @@ const DATA = {
   /* estado: "vigente" | "a verificar" | "vencido" */
   seguros: [
     { nombre: "ART",               proveedor: "A confirmar",                    estado: "a verificar", detalle: "Evaluar migración a ASOCIART" },
-    { nombre: "Seguro de vida",    proveedor: "Instituto Asegurador Mercantil", estado: "vigente",     detalle: "Seguros de ley" },
+    { nombre: "Seguro de vida",    proveedor: "A confirmar — gestionar con La Caja", estado: "a verificar", detalle: "Pendiente implementación Visma. Desarrollar contrato." },
     { nombre: "Póliza Prevención", proveedor: "A confirmar",                    estado: "a verificar", detalle: "Pendiente compartir con Rodo" },
   ],
 
@@ -422,6 +421,13 @@ const DATA = {
         { texto: "Matriz de Nómina MasterFile",        estado: "active"  },
         { texto: "Comunicación a equipos",             estado: "pending" },
         { texto: "Legajos físicos organizados",        estado: "pending" },
+        { texto: "Cobertura médica: 3 empleados rinden factura — migrar metodología", estado: "active" },
+        { texto: "Desarrollar contratos Swiss Medical y Omint", estado: "pending" },
+        { texto: "Reunión variables técnicas (lunes 8/6)",  estado: "active"  },
+        { texto: "Escribir a Estudio Chaufen — status Bettatis", estado: "pending" },
+        { texto: "Mail a Fede Arese — cambio admin a Jorge Silvestri en B-One", estado: "pending" },
+        { texto: "Rodo: caso Blot → B-Gaming con legales",   estado: "pending" },
+        { texto: "5 empleados ATSA reportan a Jorge Silvestri (Gte. Administración)", estado: "active" },
       ]
     },
     {
@@ -443,7 +449,7 @@ const DATA = {
   litigios: [
     {
       caso: "Bettatis c/ ATSA",
-      descripcion: "Diferencia en base de cálculo indemnizatorio. Inicio: mayo 2026. Estudio actuante: Chaufen — en intercambio de documentación."
+      descripcion: "Diferencia en base de cálculo indemnizatorio. Inicio: mayo 2026. Estudio actuante: Chaufen. Pendiente: escribir al estudio para consultar status."
     },
   ],
 
