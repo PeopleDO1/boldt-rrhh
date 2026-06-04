@@ -546,7 +546,7 @@ const DATA = {
     { label: 'Total empleados', value: DATA.totalEmpleados.toLocaleString('es-AR'), sub: 'Grupo Boldt', tag: null },
     { label: 'Sociedades', value: DATA.empresas, sub: 'empresas del grupo', tag: null },
     { label: 'ATSA', value: DATA.empleadosAtsa, sub: 'empleados en integración', tag: { text: 'En proceso', cls: 'tag-warn' } },
-    { label: 'Con CCT', value: DATA.convenioCount, sub: 'sociedades bajo convenio', tag: { text: 'Activo', cls: 'tag-warn' } },
+    { label: 'Sociedades con Personal en Convenio', value: DATA.convenioCount, sub: 'sociedades con empleados en CCT', tag: { text: 'Activo', cls: 'tag-warn' } },
   ];
   const mr = document.getElementById('metrics-row');
   metrics.forEach(m => {
