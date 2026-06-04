@@ -389,6 +389,15 @@ const DATA = {
     { label: "30 a 45 años",  cantidad: 27, pct: 65.9 },
     { label: "Mayores de 45", cantidad: 11, pct: 26.8 },
   ],
+  genero: [
+    { label: "Masculino", cantidad: 29, pct: 70.7 },
+    { label: "Femenino",  cantidad: 12, pct: 29.3 },
+  ],
+  parentalidad: [
+    { label: "Padres",       cantidad: 17, pct: 41.5 },
+    { label: "Madres",       cantidad: 5,  pct: 12.2 },
+    { label: "Sin hijos",    cantidad: 19, pct: 46.3 },
+  ],
 
   /* ---- Seguros ---- */
   /* estado: "vigente" | "a verificar" | "vencido" */
@@ -486,6 +495,10 @@ const DATA = {
     <div class="section-label">Demografía — ATSA</div>
     <div class="metrics-row" id="demo-metrics"></div>
     <div class="beneficio-card" id="demo-rangos" style="margin-top:0"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+      <div class="beneficio-card" id="demo-genero" style="margin-top:0"></div>
+      <div class="beneficio-card" id="demo-parentalidad" style="margin-top:0"></div>
+    </div>
   </section>
 
   <!-- Seguros -->
@@ -650,6 +663,39 @@ const DATA = {
         <div style="min-width:44px;text-align:right;font-size:12px;color:var(--ink3)">${r.pct}%</div>
       </div>`).join('');
     dr.innerHTML = `<div class="beneficio-title">Distribución por edad</div>${rangosHTML}`;
+
+    /* Género */
+    if (DATA.genero) {
+      const dg = document.getElementById('demo-genero');
+      const generoHTML = DATA.genero.map(g => {
+        const color = g.label === 'Masculino' ? '#4A7FC1' : '#E07A8F';
+        return `
+        <div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border2)">
+          <div style="min-width:100px;font-size:13px;font-weight:500;color:var(--ink)">${g.label}</div>
+          <div style="flex:1;height:7px;background:var(--surface2);border-radius:4px;overflow:hidden">
+            <div style="height:100%;width:${g.pct}%;background:${color};border-radius:4px"></div>
+          </div>
+          <div style="min-width:24px;text-align:right;font-size:13px;font-weight:500;color:var(--ink2)">${g.cantidad}</div>
+          <div style="min-width:44px;text-align:right;font-size:12px;color:var(--ink3)">${g.pct}%</div>
+        </div>`}).join('');
+      dg.innerHTML = `<div class="beneficio-title">Distribución por género</div>${generoHTML}`;
+    }
+
+    /* Parentalidad */
+    if (DATA.parentalidad) {
+      const dp = document.getElementById('demo-parentalidad');
+      const colores = { 'Padres': '#4A7FC1', 'Madres': '#E07A8F', 'Sin hijos': '#B0B0B0' };
+      const parentHTML = DATA.parentalidad.map(p => `
+        <div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border2)">
+          <div style="min-width:100px;font-size:13px;font-weight:500;color:var(--ink)">${p.label}</div>
+          <div style="flex:1;height:7px;background:var(--surface2);border-radius:4px;overflow:hidden">
+            <div style="height:100%;width:${p.pct}%;background:${colores[p.label]||'var(--accent)'};border-radius:4px"></div>
+          </div>
+          <div style="min-width:24px;text-align:right;font-size:13px;font-weight:500;color:var(--ink2)">${p.cantidad}</div>
+          <div style="min-width:44px;text-align:right;font-size:12px;color:var(--ink3)">${p.pct}%</div>
+        </div>`).join('');
+      dp.innerHTML = `<div class="beneficio-title">Parentalidad</div>${parentHTML}`;
+    }
   }
 
 
@@ -690,3 +736,4 @@ const DATA = {
 </script>
 </body>
 </html>
+
