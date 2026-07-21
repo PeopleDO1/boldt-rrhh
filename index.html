@@ -231,6 +231,47 @@
     transition: width .6s ease;
   }
 
+  /* ---- Resumen Ejecutivo ---- */
+  .resumen-ejecutivo-sub {
+    font-size: 13px;
+    color: var(--ink2);
+    margin-bottom: 16px;
+    max-width: 640px;
+    line-height: 1.5;
+  }
+  .progreso-track {
+    display: flex;
+    width: 100%;
+    height: 16px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 18px;
+    border: 1px solid var(--border);
+  }
+  .progreso-seg {
+    height: 100%;
+    transition: width .6s ease;
+  }
+  .progreso-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 12px;
+  }
+  .progreso-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12.5px;
+    color: var(--ink2);
+  }
+  .progreso-legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
   /* ---- Seguros ---- */
   .seguros-list { display: flex; flex-direction: column; gap: 8px; }
   .seguro-row {
@@ -335,6 +376,7 @@ const DATA = {
   /* ---- Encabezado ---- */
   periodo: new Date().toLocaleDateString("es-AR", { month: "long", year: "numeric" }).replace(/^\w/, c => c.toUpperCase()),
   actualizacion: "20 de julio de 2026",
+  periodoInicio: "1 de junio de 2026",
   consultor: "Patricio Vezza — People DO HR Consulting",
 
   /* ---- KPIs resumen ---- */
@@ -492,6 +534,15 @@ const DATA = {
     ✏️ <strong>Modo edición:</strong> modificá los valores en la sección DATA al inicio del archivo y guardá. El dashboard se actualiza automáticamente.
   </div>
 
+  <!-- Resumen Ejecutivo -->
+  <section class="section" id="resumen-ejecutivo-section">
+    <div class="section-label">Resumen Ejecutivo — Seguimiento Grupo Boldt RRHH</div>
+    <div class="resumen-ejecutivo-sub" id="resumen-ejecutivo-sub"></div>
+    <div class="metrics-row" id="resumen-ejecutivo-metrics"></div>
+    <div class="progreso-track" id="resumen-ejecutivo-bar"></div>
+    <div class="progreso-legend" id="resumen-ejecutivo-legend"></div>
+  </section>
+
   <!-- Métricas resumen -->
   <section class="section">
     <div class="section-label">Resumen del Grupo</div>
@@ -554,6 +605,47 @@ const DATA = {
   document.getElementById('hdr-consultor').textContent = DATA.consultor;
   document.getElementById('footer-consultor').textContent = DATA.consultor;
   document.getElementById('footer-date').textContent = DATA.actualizacion;
+
+  /* ---- Resumen Ejecutivo ---- */
+  const todosHitos = DATA.proyectos.flatMap(p => p.hitos);
+  const totalHitos = todosHitos.length;
+  const doneHitos = todosHitos.filter(h => h.estado === 'done').length;
+  const activeHitos = todosHitos.filter(h => h.estado === 'active').length;
+  const pendingHitos = todosHitos.filter(h => h.estado === 'pending').length;
+  const pctDone = totalHitos ? Math.round(doneHitos / totalHitos * 100) : 0;
+  const pctActive = totalHitos ? Math.round(activeHitos / totalHitos * 100) : 0;
+  const pctPending = totalHitos ? Math.round(pendingHitos / totalHitos * 100) : 0;
+
+  document.getElementById('resumen-ejecutivo-sub').textContent =
+    `Desde el ${DATA.periodoInicio} se gestionaron ${totalHitos} temas entre relaciones laborales, administración de personal, beneficios y payroll, en el marco del proceso de integración de ATSA a Grupo Boldt.`;
+
+  const reMetrics = [
+    { label: 'Total de temas gestionados', value: totalHitos, sub: `desde ${DATA.periodoInicio}`, tag: null },
+    { label: 'Finalizados', value: `${doneHitos}`, sub: `${pctDone}% del total`, tag: { text: 'OK', cls: 'tag-ok' } },
+    { label: 'En curso', value: `${activeHitos}`, sub: `${pctActive}% del total`, tag: { text: 'En proceso', cls: 'tag-warn' } },
+    { label: 'Pendientes', value: `${pendingHitos}`, sub: `${pctPending}% del total`, tag: null },
+  ];
+  const rem = document.getElementById('resumen-ejecutivo-metrics');
+  reMetrics.forEach(m => {
+    rem.innerHTML += `<div class="metric-card">
+      <span class="metric-label">${m.label}</span>
+      <span class="metric-value">${m.value}</span>
+      <span class="metric-sub">${m.sub}</span>
+      ${m.tag ? `<span class="metric-tag ${m.tag.cls}">${m.tag.text}</span>` : ''}
+    </div>`;
+  });
+
+  const reBar = document.getElementById('resumen-ejecutivo-bar');
+  reBar.innerHTML = `
+    <div class="progreso-seg" style="width:${pctDone}%;background:var(--ok)"></div>
+    <div class="progreso-seg" style="width:${pctActive}%;background:var(--warn)"></div>
+    <div class="progreso-seg" style="width:${pctPending}%;background:var(--border)"></div>
+  `;
+  document.getElementById('resumen-ejecutivo-legend').innerHTML = `
+    <div class="progreso-legend-item"><span class="progreso-legend-dot" style="background:var(--ok)"></span>Finalizados — ${doneHitos} (${pctDone}%)</div>
+    <div class="progreso-legend-item"><span class="progreso-legend-dot" style="background:var(--warn)"></span>En curso — ${activeHitos} (${pctActive}%)</div>
+    <div class="progreso-legend-item"><span class="progreso-legend-dot" style="background:var(--ink3)"></span>Pendientes — ${pendingHitos} (${pctPending}%)</div>
+  `;
 
   /* ---- Métricas resumen ---- */
   const metrics = [
