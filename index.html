@@ -16,15 +16,15 @@
      ============================================= */
 
   :root {
-    --bg: #F5F3EE;
+    --bg: #FFFFFF;
     --surface: #FFFFFF;
-    --surface2: #EFEDE7;
+    --surface2: #F1EFFE;
     --ink: #1A1916;
     --ink2: #6B6860;
     --ink3: #9C9A93;
-    --accent: #1A4A3A;
-    --accent2: #2D7A5F;
-    --accent-light: #E8F2EE;
+    --accent: #4F46E5;
+    --accent2: #6C63FF;
+    --accent-light: #EEEBFF;
     --warn: #B85C1A;
     --warn-light: #FDF0E8;
     --ok: #2D7A5F;
@@ -334,27 +334,27 @@ const DATA = {
 
   /* ---- Encabezado ---- */
   periodo: new Date().toLocaleDateString("es-AR", { month: "long", year: "numeric" }).replace(/^\w/, c => c.toUpperCase()),
-  actualizacion: "19 de junio de 2026",
+  actualizacion: "20 de julio de 2026",
   consultor: "Patricio Vezza — People DO HR Consulting",
 
   /* ---- KPIs resumen ---- */
-  totalEmpleados: 1004,
+  totalEmpleados: 1011,
   empresas: 11,
-  empleadosAtsa: 41,
+  empleadosAtsa: 40,
   convenioCount: 3,          // cantidad de empresas con CCT
 
   /* ---- Nómina por empresa ---- */
   /* formato: { nombre, empleados, cct: true/false, detalle } */
   nomina: [
-    { nombre: "Boldt SA",              empleados: 285, cct: true,  detalle: "CCT vigente" },
-    { nombre: "B-Gaming",              empleados: 276, cct: false, detalle: "" },
-    { nombre: "Boldt Impresores",      empleados: 91,  cct: true,  detalle: "CCT vigente" },
+    { nombre: "Boldt SA",              empleados: 287, cct: true,  detalle: "CCT vigente" },
+    { nombre: "B-Gaming",              empleados: 281, cct: false, detalle: "" },
+    { nombre: "Boldt Impresores",      empleados: 87,  cct: true,  detalle: "CCT vigente" },
     { nombre: "UTE Bold Digital",      empleados: 74,  cct: false, detalle: "BPlay" },
     { nombre: "SPTI",                  empleados: 64,  cct: false, detalle: "" },
-    { nombre: "ATSA",                  empleados: 41,  cct: false, detalle: "Integrándose" },
-    { nombre: "Orbith",                empleados: 42,  cct: false, detalle: "" },
+    { nombre: "ATSA",                  empleados: 40,  cct: false, detalle: "Integrándose" },
+    { nombre: "Orbith",                empleados: 44,  cct: false, detalle: "" },
     { nombre: "Boldt Tech",            empleados: 43,  cct: false, detalle: "" },
-    { nombre: "UTE Boldt Gaming",      empleados: 35,  cct: false, detalle: "BPlay" },
+    { nombre: "UTE Boldt Gaming",      empleados: 38,  cct: false, detalle: "BPlay" },
     { nombre: "UTE Fuente Mayor",      empleados: 30,  cct: false, detalle: "BPlay" },
     { nombre: "Tonnjes Sud SA",        empleados: 23,  cct: true,  detalle: "CCT vigente" },
   ],
@@ -366,7 +366,7 @@ const DATA = {
 
   /* Lista de beneficios con cantidad y % reales del xlsx — mayo 2026 */
   beneficiosList: [
-    { nombre: "Gimnasio Wellhub",        cantidad: 41, pct: 100,  area: "Bienestar" },
+    { nombre: "Gimnasio Wellhub",        cantidad: 40, pct: 100,  area: "Bienestar" },
     { nombre: "Almuerzo",                cantidad: 38, pct: 92.7, area: "Alimentación" },
     { nombre: "Prepaga titular",         cantidad: 36, pct: 87.8, area: "Salud" },
     { nombre: "Línea celular",           cantidad: 24, pct: 58.5, area: "Conectividad" },
@@ -384,18 +384,18 @@ const DATA = {
   edadPromedio: 41.8,
   antiguedadPromedio: 4.8,
   rangoEdades: [
-    { label: "Menores de 30", cantidad: 3,  pct: 7.3  },
-    { label: "30 a 45 años",  cantidad: 27, pct: 65.9 },
-    { label: "Mayores de 45", cantidad: 11, pct: 26.8 },
+    { label: "Menores de 30", cantidad: 3,  pct: 7.5  },
+    { label: "30 a 45 años",  cantidad: 26, pct: 65.0 },
+    { label: "Mayores de 45", cantidad: 11, pct: 27.5 },
   ],
   genero: [
-    { label: "Masculino", cantidad: 29, pct: 70.7 },
-    { label: "Femenino",  cantidad: 12, pct: 29.3 },
+    { label: "Masculino", cantidad: 28, pct: 70.0 },
+    { label: "Femenino",  cantidad: 12, pct: 30.0 },
   ],
   parentalidad: [
-    { label: "Padres",       cantidad: 18, pct: 43.9 },
-    { label: "Madres",       cantidad: 5,  pct: 12.2 },
-    { label: "Sin hijos",    cantidad: 18, pct: 43.9 },
+    { label: "Padres",       cantidad: 17, pct: 42.5 },
+    { label: "Madres",       cantidad: 5,  pct: 12.5 },
+    { label: "Sin hijos",    cantidad: 18, pct: 45.0 },
   ],
 
   /* ---- Seguros ---- */
@@ -417,15 +417,18 @@ const DATA = {
       hitos: [
         { texto: "XLS prepaga (CUIL, f.ingreso, OS, CODEM, ANSES) → en validación con empresas de prepaga", estado: "active" },
         { texto: "Cobertura médica: 3 empleados rinden factura — en análisis", estado: "active" },
-        { texto: "Blot: queda en ATSA. Desde julio: fuera de convenio, sueldo a $1.8M, naming Analista Administrativo (a confirmar con master de posiciones Fede Arese)", estado: "active" },
-        { texto: "Gastos no rendidos — Diego R.: citar a apercibimiento verbal. Incorporar jefe G. Chiappe. Validar con Jannely si son gastos personales o laborales", estado: "active" },
-        { texto: "Acuerdo Guardia Pasiva y Bono Viaje: comunicar a líderes de Operaciones para revisión y posterior comunicación a empleados", estado: "active" },
+        { texto: "Bono Viaje: comunicar a líderes de Operaciones para revisión y posterior comunicación a empleados", estado: "active" },
+        { texto: "Política de gastos con tarjeta corporativa: documento elaborado, en revisión previo a envío a Legales", estado: "active" },
         { texto: "Comunicación a equipos",             estado: "pending" },
         { texto: "Legajos físicos organizados",        estado: "pending" },
         { texto: "Desarrollar contratos Swiss Medical y Omint", estado: "pending" },
         { texto: "Celulares: flota a coordinar con Deborah (Compras) — Resp: Tecnología (Willy Euman)", estado: "pending" },
         { texto: "Onboarding: implementar para todos los empleados desde 1/10/2026", estado: "pending" },
-        { texto: "Guardia pasiva: acta/acuerdo + reunión con Víctor el 16/6 — Realizado OK", estado: "done" },
+        { texto: "Guardia pasiva: acta/acuerdo firmado por los empleados; reunión con Víctor el 16/6 — Realizado OK", estado: "done" },
+        { texto: "Blot: queda en ATSA, fuera de convenio, sueldo a $1.8M, naming Analista Administrativo — Realizado OK", estado: "done" },
+        { texto: "Gastos no rendidos — Diego R.: apercibimiento verbal realizado, caso cerrado", estado: "done" },
+        { texto: "Uso indebido de tarjeta corporativa: empleado identificado, visita a Córdoba y comunicación de desvinculación — Realizado OK", estado: "done" },
+        { texto: "Visita a instalaciones Zepita junto a Rodo — presentación a los empleados — Realizado OK", estado: "done" },
         { texto: "Variables técnicas 18/6 — Realizado OK. Se acuerda incorporar Guardia Pasiva, Guardia Activa, Adicional Viaje y Ad. Franco Compensatorio en ATSA, igualando a Grupo Boldt", estado: "done" },
         { texto: "Bono Viaje Boldt: LaV 3.5% s/sueldo (tope $2.375.000) · SyD 8% s/sueldo (tope $2.375.000) + Franco Compensatorio (pagable como 1 jornada adicional)", estado: "done" },
         { texto: "Anticipos de sueldo: no aplica doble adelanto", estado: "done" },
@@ -500,12 +503,6 @@ const DATA = {
     <div class="nomina-grid" id="nomina-grid"></div>
   </section>
 
-  <!-- Beneficios -->
-  <section class="section">
-    <div class="section-label">Beneficios del personal</div>
-    <div class="beneficios-grid" id="beneficios-grid"></div>
-  </section>
-
   <!-- Demografía -->
   <section class="section">
     <div class="section-label">Demografía — ATSA</div>
@@ -527,6 +524,12 @@ const DATA = {
   <section class="section">
     <div class="section-label">Seguros</div>
     <div class="seguros-list" id="seguros-list"></div>
+  </section>
+
+  <!-- Beneficios -->
+  <section class="section">
+    <div class="section-label">Beneficios del personal</div>
+    <div class="beneficios-grid" id="beneficios-grid"></div>
   </section>
 
   <!-- Litigios -->
