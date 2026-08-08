@@ -1,0 +1,824 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Talento y Cultura | Grupo Boldt</title>
+<style>
+/* ============================================================
+   DATA — Editá acá los items. Cada sección es un array de tareas.
+   Campos: titulo, tipo ("Tarea"|"Proyecto"), estado ("Pendiente"|"En curso"|"Cerrado"|"Informativo"),
+   responsable, fecha, nota
+   Guardá el archivo y recargá el navegador: se actualiza solo.
+   ============================================================ */
+</style>
+</head>
+<body>
+
+<script id="DATA" type="application/json">
+{
+  "actualizado": "08 de agosto de 2026",
+  "periodo": "Agosto de 2026",
+  "secciones": [
+    {
+      "id": "empleos",
+      "nombre": "Empleos",
+      "icono": "👥",
+      "items": [
+        { "titulo": "Búsqueda 2 operadores — Centro de Cómputos (reemplazo, para Pablo Karam)", "tipo": "Proyecto", "estado": "En curso", "responsable": "Marcelo", "fecha": "27/07", "nota": "Posiciones de reemplazo." },
+        { "titulo": "Búsqueda Operador de NOC — SPTI (jefe: Javier González)", "tipo": "Proyecto", "estado": "En curso", "responsable": "Pato", "fecha": "28/07", "nota": "Monitoreo y transmisión de datos, captura y procesamiento para 6 provincias. 2 candidatos en estudios de preingreso (al 10/08). Ingreso estimado 01/09." },
+        { "titulo": "Coordinar reunión Marce + Euge + Javier González — búsqueda operadores SPTI", "tipo": "Tarea", "estado": "Cerrado", "responsable": "Pato", "fecha": "27/07", "nota": "Reunión realizada." },
+        { "titulo": "Coordinar entrevistas con candidatos — búsqueda operadores SPTI", "tipo": "Tarea", "estado": "Cerrado", "responsable": "Pato", "fecha": "03/08", "nota": "2 candidatos finalistas van a Examen prelaboral el 10/08." },
+        { "titulo": "Búsqueda Especialista UX/UI", "tipo": "Proyecto", "estado": "En curso", "responsable": "Marcelo", "fecha": "08/08", "nota": "3 finalistas presentados. Esperando devolución de la línea de negocio." }
+      ]
+    },
+    {
+      "id": "formacion",
+      "nombre": "Formación",
+      "icono": "🎓",
+      "items": [
+        { "titulo": "Programa de Liderazgo — reunión con Gustavo Rymberg", "tipo": "Tarea", "estado": "Cerrado", "responsable": "Pato", "fecha": "jue 30/07 · 10hs", "nota": "Reunión realizada." },
+        { "titulo": "Análisis de la propuesta del Programa de Liderazgo", "tipo": "Tarea", "estado": "Pendiente", "responsable": "Marcelo", "fecha": "03/08", "nota": "" },
+        { "titulo": "Certificación PM — ITBA", "tipo": "Proyecto", "estado": "Cerrado", "responsable": "Pato", "fecha": "08/08", "nota": "Cursada inicia 27/08. Alcanza a 7 empleados PM de ATSA." }
+      ]
+    },
+    {
+      "id": "comunicacion",
+      "nombre": "Comunicación",
+      "icono": "📣",
+      "items": [
+        { "titulo": "Reportes Humand — acceso general para Fede Arese", "tipo": "Tarea", "estado": "Pendiente", "responsable": "Euge", "fecha": "27/07", "nota": "Solicitado para los 3 (MN, EPM, PV)." }
+      ]
+    },
+    {
+      "id": "sgd",
+      "nombre": "SGD",
+      "icono": "🎯",
+      "items": [
+        { "titulo": "Seguimiento SGD", "tipo": "Proyecto", "estado": "En curso", "responsable": "Euge", "fecha": "27/07", "nota": "" },
+        { "titulo": "Calibración", "tipo": "Proyecto", "estado": "En curso", "responsable": "Euge", "fecha": "27/07", "nota": "" }
+      ]
+    },
+    {
+      "id": "clima",
+      "nombre": "Clima y Cultura",
+      "icono": "🌱",
+      "items": [
+        { "titulo": "Presentación Valores y Comportamientos", "tipo": "Proyecto", "estado": "En curso", "responsable": "Marcelo", "fecha": "27/07", "nota": "Etapa 1: prelanzamiento a Gerentes y Jefes, semana del 21/09. Etapa 2: talleres de comunicación desde noviembre (incluye sedes del interior). Riesgo: en noviembre compite con la calibración del ciclo de desempeño y la fiesta de fin de año." }
+      ]
+    },
+    {
+      "id": "estructura",
+      "nombre": "Estructura Organizacional",
+      "icono": "🏢",
+      "items": [
+        { "titulo": "Compras y Comex pasan a reportar a Matías", "tipo": "Tarea", "estado": "Cerrado", "responsable": "Pato", "fecha": "27/07", "nota": "Reunión con Marcelo y Matías (Jefe de Compras): presentación institucional de ATSA, organigrama, e info de los 2 recursos de ATSA que ahora reportan a Matías." },
+        { "titulo": "Esteban Mellis — Jefe de Ingeniería en ATSA", "tipo": "Tarea", "estado": "Cerrado", "responsable": "Marcelo", "fecha": "desde 1/8", "nota": "Alta dada en ATSA y cargado en el organigrama. En novedades de nómina ATSA desde el 1/8. Cesión ya firmada." },
+        { "titulo": "Cambio de 5 posiciones en ATSA", "tipo": "Tarea", "estado": "Cerrado", "responsable": "Pato", "fecha": "17/07", "nota": "Nuevo rol en la estructura: ascensos y, en algunos casos, actualización salarial. Ya implementado." },
+        { "titulo": "Presentación institucional de ATSA — equipos RRHH Servicios Tecnológicos", "tipo": "Tarea", "estado": "Cerrado", "responsable": "Pato", "fecha": "03/08", "nota": "Presentación a Rodo y sus reportes (Nico y Sonia), y a Marce y su reporte (Euge)." },
+        { "titulo": "Homologación de beneficios ATSA vs. Boldt", "tipo": "Tarea", "estado": "En curso", "responsable": "Pato", "fecha": "08/08", "nota": "Detectadas diferencias a favor de Boldt (Vacunación Antigripal, Movistar, Personal+Flow, Cuenta Sueldo, Convenio UCA/UCEMA) según B One. Chequeando si se repite en el resto de los negocios. El detalle se carga en el dashboard de Administración." }
+      ]
+    },
+    {
+      "id": "herramientas",
+      "nombre": "Herramientas RRHH",
+      "icono": "🛠️",
+      "items": [
+        { "titulo": "Humand — conocer alcance y valor de la herramienta", "tipo": "Tarea", "estado": "Pendiente", "responsable": "Pato", "fecha": "27/07", "nota": "" },
+        { "titulo": "Configuración de carpetas HiringRoom", "tipo": "Tarea", "estado": "En curso", "responsable": "Euge", "fecha": "27/07", "nota": "" },
+        { "titulo": "Acceso a Medicina Laboral MEGAH", "tipo": "Tarea", "estado": "Cerrado", "responsable": "Pato", "fecha": "03/08", "nota": "Acceso solicitado por Marcelo." },
+        { "titulo": "Acceso a Plataforma Consultar — Psicotécnicos y Ambientales", "tipo": "Tarea", "estado": "Cerrado", "responsable": "Pato", "fecha": "03/08", "nota": "Acceso solicitado por Marcelo." },
+        { "titulo": "Habilitación para envío de mails de RRHH Servicios Tecnológicos", "tipo": "Tarea", "estado": "Cerrado", "responsable": "Pato", "fecha": "03/08", "nota": "Acceso solicitado por Marcelo." },
+        { "titulo": "Proyecto de Calibración — liderado por RRHH", "tipo": "Proyecto", "estado": "Pendiente", "responsable": "Pato", "fecha": "08/08", "nota": "RRHH lidera el proyecto de Calibración. Próximos pasos: averiguar con Humand qué modelo de calibración trae la solución, y armar el proyecto." },
+        { "titulo": "Tarjetas de onboarding — Propuesta de Valor y Rol del Líder", "tipo": "Tarea", "estado": "Cerrado", "responsable": "Pato", "fecha": "08/08", "nota": "Recibidas de Marcelo. Para implementar en los próximos ingresos de personal." }
+      ]
+    },
+    {
+      "id": "salud",
+      "nombre": "Salud y Seguridad Laboral",
+      "icono": "🩺",
+      "items": [
+        { "titulo": "Presupuesto CEMIBA — Examen trabajo en altura", "tipo": "Tarea", "estado": "Cerrado", "responsable": "Pato", "fecha": "27/07", "nota": "" },
+        { "titulo": "Turnos coordinados — Examen trabajo en altura", "tipo": "Tarea", "estado": "En curso", "responsable": "Pato", "fecha": "03/08", "nota": "Turnos solicitados para los 13 empleados del área Técnica de ATSA." }
+      ]
+    }
+  ],
+  "busquedas": [
+    { "puesto": "Operador Centro de Cómputos", "area": "Centro de Cómputos", "vacantes": 2, "responsable": "Marcelo", "motivo": "Reemplazo", "estado": "Abierta", "fechaApertura": null, "comentario": "" },
+    { "puesto": "Operador de NOC — SPTI", "area": "NOC / SPTI", "vacantes": 1, "responsable": "Pato", "motivo": "Nueva posición", "estado": "Abierta", "fechaApertura": "2026-07-28", "fechaIngresoEstimada": "2026-09-01", "comentario": "2 candidatos en estudios de preingreso (al 10/08). Ingreso estimado 01/09." },
+    { "puesto": "Especialista UX/UI", "area": "Diseño", "vacantes": 1, "responsable": "Marcelo", "motivo": "A confirmar", "estado": "Abierta", "fechaApertura": null, "comentario": "3 finalistas presentados. Esperando devolución de la línea de negocio." }
+  ],
+  "iniciativas": [
+    { "id": "branding", "nombre": "Employer Branding", "actividades": [
+        { "titulo": "Presencia en universidades e institutos técnicos", "estado": "Idea", "nota": "" },
+        { "titulo": "Programa de referidos", "estado": "Idea", "nota": "Foco en perfiles técnicos escasos (NOC, SPTI, Centro de Cómputos)." }
+      ]
+    },
+    { "id": "sucesion", "nombre": "Sucesión / Talent Review", "actividades": [
+        { "titulo": "Talent review de posiciones clave", "estado": "Idea", "nota": "Continuación natural del proyecto de Posiciones Clave (ATSA)." }
+      ]
+    },
+    { "id": "carrera", "nombre": "Plan de Carrera", "actividades": [
+        { "titulo": "Mapeo de trayectorias internas", "estado": "Idea", "nota": "" }
+      ]
+    },
+    { "id": "clima-enc", "nombre": "Encuestas de Clima", "actividades": [
+        { "titulo": "Encuesta de clima anual", "estado": "Idea", "nota": "" }
+      ]
+    },
+    { "id": "mentoring", "nombre": "Mentoring", "actividades": [
+        { "titulo": "Diseño de programa de mentoring", "estado": "Idea", "nota": "Podría conectar con el Programa de Liderazgo." }
+      ]
+    },
+    { "id": "wellbeing", "nombre": "Wellbeing", "actividades": [
+        { "titulo": "Diagnóstico de bienestar / balance vida-trabajo", "estado": "Idea", "nota": "" }
+      ]
+    },
+    { "id": "diversidad", "nombre": "Diversidad e Inclusión", "actividades": [
+        { "titulo": "Diagnóstico de diversidad en áreas técnicas", "estado": "Idea", "nota": "" }
+      ]
+    },
+    { "id": "exit", "nombre": "Exit Interviews", "actividades": [
+        { "titulo": "Protocolo de entrevistas de salida", "estado": "Idea", "nota": "" }
+      ]
+    },
+    { "id": "reconocimiento", "nombre": "Reconocimiento", "actividades": [
+        { "titulo": "Programa de reconocimiento (empleado del mes / logros)", "estado": "Idea", "nota": "" }
+      ]
+    },
+    { "id": "membresias", "nombre": "Membresías Institucionales", "actividades": [
+        { "titulo": "AmCham Argentina", "estado": "Idea", "nota": "Cámara de Comercio de EE.UU. en Argentina, 640 empresas socias. Acceso a asesoría legal/tributaria/regulatoria, networking y buenas prácticas." },
+        { "titulo": "IDEA (Instituto para el Desarrollo Empresarial de la Argentina)", "estado": "Idea", "nota": "Formación de líderes, benchmarking entre empresas, Coloquio Anual. Más de 500 empresas socias." }
+      ]
+    },
+    { "id": "eventos", "nombre": "Eventos y Vida Interna", "actividades": [
+        { "titulo": "Día del Niño", "estado": "Idea", "nota": "" },
+        { "titulo": "Fiesta de fin de año", "estado": "Idea", "nota": "27/11 (fecha tentativa)." },
+        { "titulo": "Torneo de Pádel", "estado": "Idea", "nota": "" }
+      ]
+    }
+  ],
+  "calendario": [
+    { "titulo": "Vacaciones Pato", "estado": "Confirmado", "nota": "Lun 30/11 al 4/12, y 25/01 al vie 12/02" },
+    { "titulo": "Vacaciones Marce", "estado": "A confirmar", "nota": "" },
+    { "titulo": "Vacaciones Euge", "estado": "Confirmado", "nota": "21/09 al 12/10" },
+    { "titulo": "Fiesta de fin de año", "estado": "Confirmado", "nota": "27/11 (fecha tentativa)" }
+  ],
+  "agenda": [
+    { "mes": "Agosto", "anio": 2026, "mesNum": 8, "items": [
+        { "titulo": "Gestionar acción Día del Padre", "inicio": 3, "fin": 7 },
+        { "titulo": "Gestionar acción Valores & Comportamientos", "inicio": 3, "fin": 7 },
+        { "titulo": "Viaje MN a Santa Fe y Córdoba", "inicio": 10, "fin": 14 },
+        { "titulo": "Gestionar acción Valores & Comportamientos", "inicio": 10, "fin": 14 },
+        { "titulo": "Día del Padre", "inicio": 14, "fin": 14 },
+        { "titulo": "Feriado", "inicio": 16, "fin": 16 },
+        { "titulo": "Gestionar acción Valores & Comportamientos", "inicio": 22, "fin": 23 },
+        { "titulo": "Gestionar acción Valores & Comportamientos", "inicio": 29, "fin": 30 }
+      ]
+    },
+    { "mes": "Septiembre", "anio": 2026, "mesNum": 9, "items": [
+        { "titulo": "Lanzar Valores & Comportamientos", "inicio": 1, "fin": 4 },
+        { "titulo": "Viaje a Santa Fe y Córdoba", "inicio": 7, "fin": 11 },
+        { "titulo": "Gestionar acción Día de la Primavera", "inicio": 7, "fin": 11 },
+        { "titulo": "Talleres Tesla / Zepita / Pinzón", "inicio": 14, "fin": 18 },
+        { "titulo": "Talleres virtuales interior", "inicio": 14, "fin": 18 },
+        { "titulo": "Desayuno de Primavera", "inicio": 21, "fin": 21 },
+        { "titulo": "Prelanzamiento Valores y Comportamientos (Gerentes y Jefes)", "inicio": 21, "fin": 25 },
+        { "titulo": "Vacaciones Eugenia", "inicio": 21, "fin": 30, "finde": true }
+      ]
+    },
+    { "mes": "Octubre", "anio": 2026, "mesNum": 10, "items": [
+        { "titulo": "Vacaciones Eugenia (continúa)", "inicio": 1, "fin": 12, "finde": true },
+        { "titulo": "Gestionar acción Día de la Madre", "inicio": 13, "fin": 16 },
+        { "titulo": "Día de la Madre", "inicio": 18, "fin": 18 }
+      ],
+      "feriados": [
+        { "dia": 12, "nombre": "Día del Respeto a la Diversidad Cultural", "tipo": "oficial" }
+      ]
+    },
+    { "mes": "Noviembre", "anio": 2026, "mesNum": 11, "items": [
+        { "titulo": "Talleres de comunicación Valores y Comportamientos (sedes interior)", "inicio": 1, "fin": 30 },
+        { "titulo": "Ciclo de desempeño: autoevaluación, evaluación y calibración", "inicio": 1, "fin": 30 },
+        { "titulo": "Fiesta de fin de año (tentativa)", "inicio": 27, "fin": 27 }
+      ],
+      "feriados": [
+        { "dia": 20, "nombre": "Día de la Soberanía Nacional", "tipo": "oficial" }
+      ]
+    },
+    { "mes": "Diciembre", "anio": 2026, "mesNum": 12, "items": [],
+      "feriados": [
+        { "dia": 8, "nombre": "Inmaculada Concepción", "tipo": "oficial" },
+        { "dia": 24, "nombre": "Nochebuena", "tipo": "observado" },
+        { "dia": 25, "nombre": "Navidad", "tipo": "oficial" },
+        { "dia": 31, "nombre": "Fin de año", "tipo": "observado" }
+      ]
+    }
+  ]
+}
+</script>
+
+<div id="app"></div>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#f5f6fa}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#1a1a1a;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+#app{width:100%;display:flex;flex-direction:column;align-items:center}
+
+:root{
+  --violet:#6B21A8;
+  --violet-soft:#F4EAFB;
+  --gray:#6b7280;
+  --border:#e5e7eb;
+  --bg:#f5f6fa;
+  --pendiente:#B45309; --pendiente-bg:#FEF3C7;
+  --curso:#1D4ED8; --curso-bg:#DBEAFE;
+  --cerrado:#15803D; --cerrado-bg:#DCFCE7;
+  --info:#4B5563; --info-bg:#F3F4F6;
+  --idea:#7C3AED; --idea-bg:#EDE9FE;
+}
+
+.hero-band{width:100%;background:linear-gradient(135deg,#4B3FD6,#5A46E0);color:#fff}
+.hero-inner{max-width:1080px;margin:0 auto;padding:22px 1.5rem 30px}
+
+.hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:34px}
+.hero-eyebrow{font-size:11.5px;letter-spacing:1px;font-weight:600;color:rgba(255,255,255,.75);text-transform:uppercase}
+.hero-top-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.hero-date{font-size:12px;color:rgba(255,255,255,.75)}
+.hero-nav{display:flex;gap:8px}
+.hero-nav a{font-size:12px;padding:5px 12px;border-radius:20px;text-decoration:none;color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.3);transition:.15s}
+.hero-nav a.active{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.5);color:#fff;font-weight:600}
+.hero-nav a:hover:not(.active){border-color:rgba(255,255,255,.6);color:#fff}
+
+.hero-main{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.hero-h1{font-family:Cambria,Georgia,serif;font-size:34px;line-height:1.15}
+.hero-bold{font-weight:700;color:#fff}
+.hero-dash{font-weight:400;color:rgba(255,255,255,.7)}
+.hero-accent{font-style:italic;font-weight:400;color:#FDA24D}
+.hero-side{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.hero-pill{font-size:12px;font-weight:600;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:5px 14px;border-radius:20px}
+.hero-author{font-size:12.5px;color:rgba(255,255,255,.85)}
+
+.wrap{width:100%;max-width:1080px;padding:2rem 1.5rem 4rem}
+
+.notice{background:var(--violet-soft);border:1px solid #E4CFF3;color:#5b21a0;font-size:12.5px;border-radius:10px;padding:10px 14px;margin-bottom:1.75rem;line-height:1.5}
+
+.resumen-header{margin-bottom:1.25rem}
+.resumen-eyebrow{font-size:11.5px;letter-spacing:.8px;font-weight:700;color:var(--gray);text-transform:uppercase}
+.resumen-text{font-size:14px;color:#374151;line-height:1.6;margin-top:8px;border-top:1px solid var(--border);padding-top:12px}
+
+.progress-bar{height:10px;border-radius:6px;overflow:hidden;display:flex;background:#e5e7eb;margin-bottom:10px}
+.progress-seg{height:100%}
+.progress-legend{display:flex;gap:20px;flex-wrap:wrap;font-size:12.5px;color:#374151;margin-bottom:2rem}
+.progress-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:2rem}
+.stat{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column}
+.stat .l{font-size:12px;color:var(--gray);order:1}
+.stat .n{font-size:30px;font-weight:700;order:2;margin:4px 0 2px}
+.stat .sub{font-size:11.5px;color:var(--gray);order:3}
+.stat.pend .n{color:var(--pendiente)}
+.stat.curso .n{color:var(--curso)}
+.stat.cerrado .n{color:var(--cerrado)}
+.stat.proy .n{color:var(--violet)}
+.stat.total .n{color:#1a1a1a}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem}
+.filters button{font-size:12.5px;padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:#fff;color:var(--gray);cursor:pointer;transition:.15s}
+.filters button:hover{border-color:var(--violet);color:var(--violet)}
+.filters button.active{background:var(--violet);border-color:var(--violet);color:#fff}
+
+.sections-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+
+.section{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.section-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer}
+.section-head-left{display:flex;align-items:center;gap:10px}
+.section-title{font-size:15px;font-weight:700}
+.section-count{font-size:11.5px;color:var(--gray);font-weight:400}
+.chevron{font-size:11px;color:var(--gray);transition:transform .2s}
+.section.open .chevron{transform:rotate(180deg)}
+
+.section-body{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.section.open .section-body{max-height:1600px}
+.item{padding:12px 20px;border-top:1px solid var(--border)}
+.item:hover{background:#fafafa}
+.item.hidden{display:none}
+
+.item-top{display:flex;align-items:baseline;gap:8px}
+.badge{flex:0 0 auto;font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:6px;text-align:center;white-space:nowrap}
+.badge.tarea{background:var(--violet-soft);color:var(--violet)}
+.badge.proyecto{background:var(--violet);color:#fff}
+.item-title{flex:1;font-size:13.5px;font-weight:600;line-height:1.4}
+.estado{flex:0 0 auto;font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;text-align:center;white-space:nowrap}
+
+.item-bottom{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-top:5px;padding-left:2px}
+.item-note{font-size:12px;color:var(--gray);line-height:1.4}
+.item-meta{font-size:11.5px;color:var(--gray);white-space:nowrap;text-align:right}
+.item-meta .resp{font-weight:600;color:#374151}
+
+.empty{padding:24px 20px;text-align:center;color:var(--gray);font-size:13px}
+
+.iniciativas-header{margin:2.5rem 0 1rem}
+.iniciativas-title{font-size:19px;font-weight:700}
+.iniciativas-sub{font-size:12.5px;color:var(--gray);margin-top:3px}
+.item-only-estado .item-top{justify-content:space-between}
+
+.at-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:8px}
+.at-tile{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px}
+.at-n{font-size:24px;font-weight:700;color:var(--violet)}
+.at-l{font-size:11px;color:var(--gray);margin-top:4px;line-height:1.3}
+.at-note{font-size:11px;color:var(--gray);margin-bottom:1.5rem;line-height:1.5}
+.iniciativa-head{background:var(--violet-soft)}
+.expand-full.open{grid-column:1 / -1}
+
+.kpi-panel{margin:14px 20px 4px;background:#FAFAFC;border:1px solid var(--border);border-radius:12px;padding:16px}
+.kpi-panel-title{font-size:13px;font-weight:700;margin-bottom:12px}
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
+.kpi-tile{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px}
+.kpi-tile .kpi-n{font-size:22px;font-weight:700;color:var(--violet)}
+.kpi-tile.muted .kpi-n{color:var(--gray)}
+.kpi-tile .kpi-l{font-size:11px;color:var(--gray);margin-top:2px}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.kpi-block-title{font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.kpi-chips{display:flex;gap:6px;flex-wrap:wrap}
+.kpi-chip{font-size:11.5px;font-weight:600;background:var(--violet-soft);color:var(--violet);padding:4px 10px;border-radius:20px}
+.kpi-chip.muted{background:var(--info-bg);color:var(--gray)}
+.kpi-table{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#fff}
+.kpi-table-head{display:grid;grid-template-columns:1.6fr 1fr 0.5fr 1fr 1fr 1fr 1.8fr;gap:8px;padding:8px 12px;font-size:10.5px;font-weight:700;color:var(--gray);text-transform:uppercase;background:#F3F4F6}
+.kpi-table-row{display:grid;grid-template-columns:1.6fr 1fr 0.5fr 1fr 1fr 1fr 1.8fr;gap:8px;padding:9px 12px;font-size:12px;border-top:1px solid var(--border);align-items:center}
+.kpi-table-row .estado{justify-self:start}
+.kpi-table-row .muted{color:var(--gray);font-size:11px}
+.kpi-subnote{font-size:10px;color:var(--gray);margin-top:2px;line-height:1.4}
+.kpi-note{font-size:11px;color:var(--gray);margin-top:10px;line-height:1.5}
+
+.cal-wrap{overflow-x:auto;padding:12px 16px 16px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(58px,1fr));gap:4px;min-width:460px}
+.cal-dow{font-size:10px;font-weight:700;color:var(--gray);text-align:center;padding-bottom:2px;text-transform:uppercase}
+.cal-cell{min-height:62px;border:1px solid var(--border);border-radius:8px;padding:4px;background:#fff}
+.cal-cell.empty{background:transparent;border:none}
+.cal-cell-clickable{cursor:pointer;transition:.15s}
+.cal-cell-clickable:hover{border-color:var(--violet)}
+.cal-cell-active{border-color:var(--violet);border-width:2px;background:var(--violet-soft)}
+.cal-daynum{font-size:11px;font-weight:700;color:#374151;text-align:right;margin-bottom:2px}
+.cal-tag{background:var(--violet-soft);color:var(--violet);border-radius:4px;padding:1px 4px;font-size:9px;font-weight:600;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-more{font-size:9px;color:var(--gray);margin-top:2px}
+.cal-cell.cal-weekend{background:repeating-linear-gradient(45deg,#f3f4f6,#f3f4f6 5px,#ffffff 5px,#ffffff 10px)}
+.cal-cell.cal-feriado{background:#FEE2E2;border-color:#FCA5A5}
+.cal-cell.cal-feriado .cal-daynum{color:#B91C1C}
+.cal-cell.cal-feriado-obs{background:#FFEDD5;border-color:#FDBA74}
+.cal-cell.cal-feriado-obs .cal-daynum{color:#C2410C}
+.cal-tag-feriado{background:transparent;color:#B91C1C;font-weight:700;padding:0}
+.cal-feriado-obs .cal-tag-feriado{color:#C2410C}
+.cal-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--gray);padding:0 16px 14px}
+.cal-legend span{display:flex;align-items:center;gap:5px}
+.cal-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;border:1px solid var(--border)}
+
+.cal-detail{margin:0 16px 16px;background:var(--violet-soft);border:1px solid #E4CFF3;border-radius:10px;padding:12px 16px}
+.cal-detail-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.cal-detail-date{font-size:13px;font-weight:700;color:#5b21a0}
+.cal-detail-close{cursor:pointer;color:#5b21a0;font-size:12px;padding:2px 6px}
+.cal-detail-list{list-style:disc;padding-left:18px}
+.cal-detail-list li{font-size:12.5px;color:#3a1a5c;line-height:1.6}
+
+footer{margin-top:2rem;font-size:11.5px;color:var(--gray);text-align:center}
+
+@media (max-width:800px){
+  .sections-grid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .summary{grid-template-columns:repeat(2,1fr)}
+  .item-top{flex-wrap:wrap}
+  .item-bottom{flex-direction:column;gap:2px}
+  .item-meta{text-align:left}
+  .hero-h1{font-size:26px}
+  .hero-main{align-items:flex-start}
+  .hero-side{align-items:flex-start}
+  .hero-top{flex-direction:column;gap:10px}
+  .hero-top-right{align-items:flex-start}
+  .kpi-grid{grid-template-columns:repeat(3,1fr)}
+  .kpi-row{grid-template-columns:1fr}
+  .kpi-table-head{display:none}
+  .kpi-table-row{grid-template-columns:1fr;gap:2px;padding:10px 12px}
+  .wrap{padding:1.5rem 1rem 3rem}
+  .hero-inner{padding:18px 1rem 24px}
+  .at-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:420px){
+  .summary{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:1fr}
+  .hero-h1{font-size:22px}
+  .hero-nav a{padding:4px 9px;font-size:11px}
+  .filters button{padding:6px 11px;font-size:11.5px}
+  .at-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<script>
+const DATA = JSON.parse(document.getElementById('DATA').textContent);
+
+function estadoClass(e){ return e.replace(' ', '.'); }
+
+function computeAgendaTablero(){
+  const hoy = new Date();
+  const limite = new Date(2026, 11, 15, 23,59,59); // 15 de diciembre 2026
+  const msPorSemana = 7*24*60*60*1000;
+  const semanasRestantes = Math.max(0, Math.ceil((limite - hoy)/msPorSemana));
+  let total = 0, transcurridas = 0;
+  DATA.agenda.forEach(m=>{
+    m.items.forEach(it=>{
+      total++;
+      const fin = new Date(m.anio, m.mesNum-1, it.fin, 23,59,59);
+      if(fin < hoy) transcurridas++;
+    });
+  });
+  const pendientes = total - transcurridas;
+  const pctAvance = total>0 ? Math.round(transcurridas/total*100) : 0;
+  const porSemana = semanasRestantes>0 ? Math.round((pendientes/semanasRestantes)*10)/10 : pendientes;
+  return {total,transcurridas,pendientes,semanasRestantes,pctAvance,porSemana};
+}
+
+const ACCION_PALETTE = [
+  {bg:'#DBEAFE',text:'#1D4ED8'},
+  {bg:'#CCFBF1',text:'#0F766E'},
+  {bg:'#FCE7F3',text:'#BE185D'},
+  {bg:'#FEF9C3',text:'#854D0E'},
+  {bg:'#DCFCE7',text:'#15803D'},
+  {bg:'#E0E7FF',text:'#4338CA'},
+  {bg:'#CFFAFE',text:'#0E7490'},
+  {bg:'#FFE4E6',text:'#BE123C'},
+  {bg:'#ECFCCB',text:'#4D7C0F'},
+  {bg:'#F3E8FF',text:'#7E22CE'}
+];
+function getAccionColor(titulo){
+  let hash = 0;
+  for(let i=0;i<titulo.length;i++){ hash = (hash*31 + titulo.charCodeAt(i)) % 100000; }
+  return ACCION_PALETTE[hash % ACCION_PALETTE.length];
+}
+
+function buildMonthWeeks(year, monthNum){
+  const monthIndex = monthNum - 1;
+  const daysInMonth = new Date(year, monthIndex+1, 0).getDate();
+  let startWeekday = new Date(year, monthIndex, 1).getDay(); // 0=Dom..6=Sab
+  startWeekday = (startWeekday+6)%7; // 0=Lun..6=Dom
+  const cells = [];
+  for(let i=0;i<startWeekday;i++) cells.push(null);
+  for(let d=1; d<=daysInMonth; d++) cells.push(d);
+  while(cells.length%7!==0) cells.push(null);
+  const weeks=[];
+  for(let i=0;i<cells.length;i+=7) weeks.push(cells.slice(i,i+7));
+  return weeks;
+}
+
+function estadoColorCal(estado){
+  if(estado==='Confirmado') return {bg:'var(--cerrado-bg)',color:'var(--cerrado)'};
+  return {bg:'var(--pendiente-bg)',color:'var(--pendiente)'};
+}
+
+function computeStats(secciones){
+  let pend=0, curso=0, cerrado=0, proy=0;
+  secciones.forEach(s=>s.items.forEach(i=>{
+    if(i.estado==='Pendiente') pend++;
+    if(i.estado==='En curso') curso++;
+    if(i.estado==='Cerrado') cerrado++;
+    if(i.tipo==='Proyecto') proy++;
+  }));
+  const total = pend+curso+cerrado;
+  const pct = n => total>0 ? Math.round(n/total*100) : 0;
+  return {pend,curso,cerrado,proy,total,pctPend:pct(pend),pctCurso:pct(curso),pctCerrado:pct(cerrado)};
+}
+
+function computeBusquedasStats(){
+  const bq = DATA.busquedas || [];
+  const total = bq.length;
+  const totalVacantes = bq.reduce((acc,b)=> acc + (b.vacantes||1), 0);
+  const cerradas = bq.filter(b=>b.estado==='Cerrada').length;
+  const tasa = total>0 ? Math.round(cerradas/total*100) : 0;
+  const porResp = {};
+  bq.forEach(b=>{ porResp[b.responsable] = (porResp[b.responsable]||0)+1; });
+  const porMotivo = {};
+  bq.forEach(b=>{ porMotivo[b.motivo] = (porMotivo[b.motivo]||0)+1; });
+  const hoy = new Date();
+  const dias = (a,b) => Math.round((b-a)/(1000*60*60*24));
+  const conProyeccion = bq.filter(b=>b.fechaApertura && b.fechaIngresoEstimada);
+  let ttfAvg = null;
+  if(conProyeccion.length>0){
+    const totalDias = conProyeccion.reduce((acc,b)=> acc + dias(new Date(b.fechaApertura), new Date(b.fechaIngresoEstimada)), 0);
+    ttfAvg = Math.round(totalDias/conProyeccion.length);
+  }
+  const bqConAntiguedad = bq.map(b=>({
+    ...b,
+    antiguedad: b.fechaApertura ? dias(new Date(b.fechaApertura), hoy) : null
+  }));
+  return {bq:bqConAntiguedad,total,totalVacantes,cerradas,tasa,porResp,porMotivo,ttfAvg};
+}
+
+let activeFilter = 'todas';
+let selectedDay = {};
+let openSections = {};
+
+function isOpenFor(id, defaultVal){
+  if(openSections[id]===undefined) openSections[id] = defaultVal;
+  return openSections[id];
+}
+
+function selectDay(idx, day){
+  selectedDay[idx] = (selectedDay[idx] === day) ? null : day;
+  render();
+}
+
+function matchesFilter(item){
+  if(activeFilter==='todas') return true;
+  if(activeFilter==='tareas') return item.tipo==='Tarea';
+  if(activeFilter==='proyectos') return item.tipo==='Proyecto';
+  if(activeFilter==='pendiente') return item.estado==='Pendiente';
+  if(activeFilter==='curso') return item.estado==='En curso';
+  if(activeFilter==='cerrado') return item.estado==='Cerrado';
+  return true;
+}
+
+function setFilter(f){ activeFilter = f; render(); }
+function toggleSection(id){
+  openSections[id] = !isOpenFor(id, false);
+  render();
+}
+
+function render(){
+  const app = document.getElementById('app');
+  const stats = computeStats(DATA.secciones);
+
+  const filterDefs = [
+    ['todas','Todas'],['tareas','Tareas'],['proyectos','Proyectos'],
+    ['pendiente','Pendientes'],['curso','En curso'],['cerrado','Cerradas']
+  ];
+
+  let html = `
+  <div class="hero-band">
+    <div class="hero-inner">
+      <div class="hero-top">
+        <span class="hero-eyebrow">GRUPO BOLDT · RECURSOS HUMANOS</span>
+        <div class="hero-top-right">
+          <div class="hero-nav">
+            <a href="https://rrhh-boldt.vercel.app/">Administración</a>
+            <a class="active" href="#">Talento</a>
+          </div>
+          <span class="hero-date">Actualizado: ${DATA.actualizado}</span>
+        </div>
+      </div>
+      <div class="hero-main">
+        <h1 class="hero-h1"><span class="hero-bold">Dashboard</span> <span class="hero-dash">—</span> <span class="hero-accent">Talento y Cultura</span></h1>
+        <div class="hero-side">
+          <span class="hero-pill">${DATA.periodo}</span>
+          <span class="hero-author">Patricio Vezza — PeopleDO HR Consulting</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+
+    <div class="resumen-header">
+      <span class="resumen-eyebrow">RESUMEN EJECUTIVO — SEGUIMIENTO TALENTO Y CULTURA</span>
+      <p class="resumen-text">Seguimiento de Patricio Vezza (PeopleDO) sobre los temas de Talento y Cultura de Grupo Boldt — búsquedas, formación, comunicación, SGD, clima y demás áreas relevadas desde el 8 de mayo de 2026, fecha de la primera reunión con Marcelo.</p>
+    </div>
+
+    <div class="summary">
+      <div class="stat total"><div class="l">Total de temas gestionados</div><div class="n">${stats.total}</div><div class="sub">desde 08/05/2026</div></div>
+      <div class="stat cerrado"><div class="l">Finalizados</div><div class="n">${stats.cerrado}</div><div class="sub">${stats.pctCerrado}% del total</div></div>
+      <div class="stat curso"><div class="l">En curso</div><div class="n">${stats.curso}</div><div class="sub">${stats.pctCurso}% del total</div></div>
+      <div class="stat pend"><div class="l">Pendientes</div><div class="n">${stats.pend}</div><div class="sub">${stats.pctPend}% del total</div></div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-seg" style="width:${stats.pctCerrado}%;background:var(--cerrado)"></div>
+      <div class="progress-seg" style="width:${stats.pctCurso}%;background:var(--curso)"></div>
+    </div>
+    <div class="progress-legend">
+      <span><i style="background:var(--cerrado)"></i>Finalizados — ${stats.cerrado} (${stats.pctCerrado}%)</span>
+      <span><i style="background:var(--curso)"></i>En curso — ${stats.curso} (${stats.pctCurso}%)</span>
+      <span><i style="background:#d1d5db"></i>Pendientes — ${stats.pend} (${stats.pctPend}%)</span>
+    </div>
+
+    <div class="filters">
+      ${filterDefs.map(([k,l])=>`<button class="${activeFilter===k?'active':''}" onclick="setFilter('${k}')">${l}</button>`).join('')}
+    </div>
+  `;
+
+  html += `
+    <div class="iniciativas-header">
+      <h2 class="iniciativas-title">Tablero de Control — Áreas de Talento y Cultura</h2>
+      <div class="iniciativas-sub">Hacé click en cada área para ver el detalle y los indicadores.</div>
+    </div>
+  `;
+
+  html += '<div class="sections-grid">';
+
+  DATA.secciones.forEach(sec=>{
+    const visibleItems = sec.items.filter(matchesFilter);
+    const isOpen = isOpenFor(sec.id, false);
+    const kpi = sec.id==='empleos' ? computeBusquedasStats() : null;
+    html += `
+    <div class="section expand-full ${isOpen?'open':''}" id="sec-${sec.id}">
+      <div class="section-head" onclick="toggleSection('${sec.id}')">
+        <div class="section-head-left">
+          <span class="section-title">${sec.nombre}</span>
+          <span class="section-count">${visibleItems.length} de ${sec.items.length}</span>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        ${kpi ? `
+        <div class="kpi-panel">
+          <div class="kpi-panel-title">Indicadores de Búsqueda</div>
+          <div class="kpi-grid">
+            <div class="kpi-tile"><div class="kpi-n">${kpi.total}</div><div class="kpi-l">Búsquedas activas</div></div>
+            <div class="kpi-tile"><div class="kpi-n">${kpi.totalVacantes}</div><div class="kpi-l">Vacantes totales</div></div>
+            <div class="kpi-tile"><div class="kpi-n">${kpi.cerradas}</div><div class="kpi-l">Cerradas en el período</div></div>
+            <div class="kpi-tile"><div class="kpi-n">${kpi.tasa}%</div><div class="kpi-l">Tasa de cobertura</div></div>
+            <div class="kpi-tile muted"><div class="kpi-n">${kpi.ttfAvg!==null?kpi.ttfAvg+' d':'—'}</div><div class="kpi-l">Time to Fill (proyectado)</div></div>
+          </div>
+          <div class="kpi-row">
+            <div class="kpi-block">
+              <div class="kpi-block-title">Por responsable</div>
+              <div class="kpi-chips">
+                ${['Marcelo','Euge','Pato'].map(p=>`<span class="kpi-chip">${p}: ${kpi.porResp[p]||0}</span>`).join('')}
+              </div>
+            </div>
+            <div class="kpi-block">
+              <div class="kpi-block-title">Por motivo</div>
+              <div class="kpi-chips">
+                ${Object.keys(kpi.porMotivo).length ? Object.entries(kpi.porMotivo).map(([m,c])=>`<span class="kpi-chip">${m}: ${c}</span>`).join('') : '<span class="kpi-chip muted">Sin datos</span>'}
+              </div>
+            </div>
+          </div>
+          <div class="kpi-table">
+            <div class="kpi-table-head"><span>Puesto</span><span>Área</span><span>Vac.</span><span>Responsable</span><span>Estado</span><span>Antigüedad</span><span>Comentarios</span></div>
+            ${kpi.bq.map(b=>`
+              <div class="kpi-table-row">
+                <span>${b.puesto}</span>
+                <span>${b.area||'—'}</span>
+                <span>${b.vacantes||1}</span>
+                <span>${b.responsable}</span>
+                <span class="estado" style="background:${b.estado==='Cerrada'?'var(--cerrado-bg)':'var(--curso-bg)'};color:${b.estado==='Cerrada'?'var(--cerrado)':'var(--curso)'}">${b.estado}</span>
+                <span class="muted">${b.antiguedad!==null ? b.antiguedad+' días' : '— sin fecha'}</span>
+                <span class="muted">${b.comentario||'—'}</span>
+              </div>
+            `).join('')}
+          </div>
+          <div class="kpi-note">Cargá la fecha de apertura de cada búsqueda para calcular Time to Fill y antigüedad automáticamente.</div>
+        </div>
+        ` : ''}
+        ${!kpi ? (sec.items.length===0 ? '<div class="empty">Sin items cargados todavía.</div>' : sec.items.map(i=>`
+          <div class="item ${matchesFilter(i)?'':'hidden'}">
+            <div class="item-top">
+              <span class="badge ${i.tipo.toLowerCase()}">${i.tipo}</span>
+              <span class="item-title">${i.titulo}</span>
+              <span class="estado" data-e="${i.estado}" style="background:${i.estado==='Pendiente'?'var(--pendiente-bg)':i.estado==='En curso'?'var(--curso-bg)':i.estado==='Cerrado'?'var(--cerrado-bg)':'var(--info-bg)'};color:${i.estado==='Pendiente'?'var(--pendiente)':i.estado==='En curso'?'var(--curso)':i.estado==='Cerrado'?'var(--cerrado)':'var(--info)'}">${i.estado}</span>
+            </div>
+            <div class="item-bottom">
+              <div class="item-note">${i.nota || ''}</div>
+              <div class="item-meta"><span class="resp">${i.responsable}</span> · ${i.fecha}</div>
+            </div>
+          </div>
+        `).join('')) : ''}
+      </div>
+    </div>`;
+  });
+
+  html += '</div>';
+
+  html += `
+    <div class="iniciativas-header">
+      <h2 class="iniciativas-title">Iniciativas</h2>
+      <div class="iniciativas-sub">Líneas de trabajo estratégicas para tener en el radar de Talento &amp; Cultura.</div>
+    </div>
+  `;
+
+  html += '<div class="sections-grid">';
+
+  DATA.iniciativas.forEach(ini=>{
+    const iniOpen = isOpenFor(ini.id, false);
+    html += `
+    <div class="section ${iniOpen?'open':''}" id="sec-${ini.id}">
+      <div class="section-head iniciativa-head" onclick="toggleSection('${ini.id}')">
+        <div class="section-head-left">
+          <span class="section-title">${ini.nombre}</span>
+          <span class="section-count">${ini.actividades.length} actividad${ini.actividades.length===1?'':'es'}</span>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        ${ini.actividades.map(a=>`
+          <div class="item item-only-estado">
+            <div class="item-top">
+              <span class="item-title">${a.titulo}</span>
+              <span class="estado" style="background:var(--idea-bg);color:var(--idea)">${a.estado}</span>
+            </div>
+            ${a.nota ? `<div class="item-bottom"><div class="item-note">${a.nota}</div></div>` : ''}
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+  });
+
+  html += '</div>';
+
+  html += `
+    <div class="iniciativas-header">
+      <h2 class="iniciativas-title">Agenda de Acciones</h2>
+      <div class="iniciativas-sub">Planning Ago–Dic 2026, según seguimiento de Comunicación / Valores y Comportamientos.</div>
+    </div>
+  `;
+
+  html += '<div class="sections-grid">';
+  DATA.agenda.forEach((m,idx)=>{
+    const mid = 'agenda-'+idx;
+    const weeks = buildMonthWeeks(m.anio, m.mesNum);
+    const dow = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+    const selDay = selectedDay[idx] || null;
+    const selDayCol = selDay ? (buildMonthWeeks(m.anio,m.mesNum).flat().indexOf(selDay) % 7) : null;
+    const selIsWeekend = selDayCol===5 || selDayCol===6;
+    const selItems = selDay ? m.items.filter(it=> selDay>=it.inicio && selDay<=it.fin && (!selIsWeekend || it.finde===true)) : [];
+    const agendaOpen = isOpenFor(mid, false);
+    html += `
+    <div class="section expand-full ${agendaOpen?'open':''}" id="sec-${mid}">
+      <div class="section-head iniciativa-head" onclick="toggleSection('${mid}')">
+        <div class="section-head-left">
+          <span class="section-title">${m.mes}</span>
+          <span class="section-count">${m.items.length} acción${m.items.length===1?'':'es'}</span>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="cal-wrap">
+        <div class="cal-grid">
+          ${dow.map(d=>`<div class="cal-dow">${d}</div>`).join('')}
+          ${weeks.map(week=>week.map((day,col)=>{
+            if(day===null) return '<div class="cal-cell empty"></div>';
+            const isWeekend = col===5 || col===6;
+            const feriado = (m.feriados||[]).find(f=>f.dia===day);
+            const dayItems = m.items.filter(it=> day>=it.inicio && day<=it.fin && (!isWeekend || it.finde===true));
+            const clickable = dayItems.length>0 || !!feriado;
+            const isSel = selDay===day;
+            const cls = ['cal-cell', clickable?'cal-cell-clickable':'', isSel?'cal-cell-active':'', isWeekend?'cal-weekend':'', feriado?(feriado.tipo==='oficial'?'cal-feriado':'cal-feriado-obs'):''].filter(Boolean).join(' ');
+            return `<div class="${cls}" ${clickable?`onclick="selectDay(${idx},${day})"`:''}>
+              <div class="cal-daynum">${day}</div>
+              ${feriado ? `<div class="cal-tag cal-tag-feriado">${feriado.nombre}</div>` : ''}
+              ${dayItems.slice(0,2).map(it=>{const c=getAccionColor(it.titulo); return `<div class="cal-tag" style="background:${c.bg};color:${c.text}">${it.titulo}</div>`;}).join('')}
+              ${dayItems.length>2 ? `<div class="cal-more">+${dayItems.length-2} más</div>` : ''}
+            </div>`;
+          }).join('')).join('')}
+        </div>
+        </div>
+        <div class="cal-legend">
+          <span><i style="background:repeating-linear-gradient(45deg,#f3f4f6,#f3f4f6 3px,#fff 3px,#fff 6px)"></i>Fin de semana</span>
+          <span><i style="background:#FEE2E2;border-color:#FCA5A5"></i>Feriado oficial</span>
+          <span><i style="background:#FFEDD5;border-color:#FDBA74"></i>Día no oficial (observado)</span>
+        </div>
+        ${selDay ? `
+        <div class="cal-detail">
+          <div class="cal-detail-head">
+            <span class="cal-detail-date">${selDay} de ${m.mes}</span>
+            <span class="cal-detail-close" onclick="selectDay(${idx},${selDay})">✕</span>
+          </div>
+          <ul class="cal-detail-list">
+            ${(m.feriados||[]).filter(f=>f.dia===selDay).map(f=>`<li><strong>Feriado${f.tipo==='observado'?' (no oficial)':''}:</strong> ${f.nombre}</li>`).join('')}
+            ${selItems.map(it=>`<li>${it.titulo}</li>`).join('')}
+          </ul>
+        </div>` : ''}
+        ${m.items.length===0 ? '<div class="empty">Pendiente de cargar.</div>' : ''}
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+
+  html += `
+    <div class="iniciativas-header">
+      <h2 class="iniciativas-title">Calendario / Fechas Importantes</h2>
+      <div class="iniciativas-sub">Vacaciones del equipo y fechas clave a tener en cuenta.</div>
+    </div>
+    <div class="section open">
+      <div class="section-body" style="max-height:1600px">
+        ${DATA.calendario.map(c=>{
+          const col = estadoColorCal(c.estado);
+          return `
+          <div class="item item-only-estado">
+            <div class="item-top">
+              <span class="item-title">${c.titulo}</span>
+              <span class="estado" style="background:${col.bg};color:${col.color}">${c.estado}</span>
+            </div>
+            ${c.nota ? `<div class="item-bottom"><div class="item-note">${c.nota}</div></div>` : ''}
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <footer>PeopleDO HR Consulting · Grupo Boldt · Dashboard de Talento y Cultura</footer>
+  </div>`;
+
+  app.innerHTML = html;
+}
+
+render();
+</script>
+</body>
+</html>
