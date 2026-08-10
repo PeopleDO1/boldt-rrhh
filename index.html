@@ -377,7 +377,7 @@ const DATA = {
 
   /* ---- Encabezado ---- */
   periodo: new Date().toLocaleDateString("es-AR", { month: "long", year: "numeric" }).replace(/^\w/, c => c.toUpperCase()),
-  actualizacion: "20 de julio de 2026",
+  actualizacion: new Date().toLocaleDateString("es-AR", { day: "numeric", month: "long", year: "numeric" }),
   periodoInicio: "1 de junio de 2026",
   consultor: "Patricio Vezza — People DO HR Consulting",
 
