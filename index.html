@@ -468,7 +468,7 @@ const DATA = {
         { texto: "Legajos físicos organizados",        estado: "pending" },
         { texto: "Desarrollar contratos Swiss Medical y Omint", estado: "pending" },
         { texto: "Celulares: flota a coordinar con Deborah (Compras) — Resp: Tecnología (Willy Euman)", estado: "pending" },
-        { texto: "Onboarding: implementar para todos los empleados desde 1/10/2026", estado: "pending" },
+        { texto: "Onboarding: implementar para todos los empleados desde 1/9/2026", estado: "pending" },
         { texto: "Guardia pasiva: acta/acuerdo firmado por los empleados; reunión con Víctor el 16/6 — Realizado OK", estado: "done" },
         { texto: "Poder Laboral para ATSA: ya en poder de Rodo — Realizado OK", estado: "done" },
         { texto: "Blot: queda en ATSA, fuera de convenio, sueldo a $1.8M, naming Analista Administrativo — Realizado OK", estado: "done" },
@@ -822,9 +822,10 @@ const DATA = {
     const hitosHTML = p.hitos.map(h => {
       const dotCls = h.estado === 'done' ? 'dot-done' : h.estado === 'active' ? 'dot-active' : 'dot-pending';
       const textStyle = h.estado === 'done' ? 'text-decoration:line-through;opacity:.5' : '';
+      const ownerBadge = h.owner ? `<span style="font-size:10.5px;color:var(--accent2);background:var(--accent-light);border-radius:999px;padding:2px 8px;margin-left:8px;white-space:nowrap;vertical-align:middle">${h.owner}</span>` : '';
       return `<div class="hito">
         <span class="hito-dot ${dotCls}"></span>
-        <span style="${textStyle}">${h.texto}</span>
+        <span style="${textStyle}">${h.texto}</span>${ownerBadge}
       </div>`;
     }).join('');
     const total   = p.hitos.length;
