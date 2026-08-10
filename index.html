@@ -98,6 +98,31 @@
     border-radius: 20px;
     border: 1px solid rgba(255,255,255,0.18);
   }
+  .header-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .header-nav a {
+    display: inline-block;
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.35);
+    color: #fff;
+    transition: background .15s ease;
+  }
+  .header-nav a.active {
+    background: #fff;
+    color: var(--accent);
+    font-weight: 700;
+    border-color: #fff;
+  }
+  .header-nav a:not(.active):hover {
+    background: rgba(255,255,255,0.10);
+  }
 
   /* ---- Layout ---- */
   .main { padding: 2.5rem 3rem; max-width: 1200px; margin: 0 auto; }
@@ -529,6 +554,10 @@ const DATA = {
     <h1 class="header-title">Dashboard <em>— Administración de Recursos Humanos</em></h1>
   </div>
   <div class="header-meta">
+    <div class="header-nav">
+      <a href="https://rrhh-boldt.vercel.app/" class="active">Administración</a>
+      <a href="https://boldt-talento.vercel.app/">Talento</a>
+    </div>
     <span class="header-date" id="hdr-actualizacion"></span>
     <span class="header-badge" id="hdr-periodo"></span>
     <span class="header-date" id="hdr-consultor" style="margin-top:2px"></span>
