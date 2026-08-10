@@ -48,80 +48,104 @@
     font-size: 15px;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
   /* ---- Header ---- */
   .header {
-    background: var(--accent);
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
     color: #fff;
-    padding: 2.5rem 3rem 2rem;
+  }
+  .header-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 22px 3rem 30px;
+    box-sizing: border-box;
+  }
+  .header-top {
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 2rem;
+    gap: 16px;
+    margin-bottom: 34px;
   }
   .header-brand { display: flex; flex-direction: column; gap: 4px; }
   .header-eyebrow {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .12em;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.55);
+    color: rgba(255,255,255,0.75);
   }
   .header-title {
     font-family: var(--font-display);
-    font-size: 2rem;
+    font-size: 34px;
     font-weight: 400;
     color: #fff;
     line-height: 1.15;
   }
   .header-title em { font-style: italic; color: #8FC9B0; }
-  .header-meta {
-    text-align: right;
+  .header-bold { font-weight: 700; color: #fff; }
+  .header-dash { font-weight: 400; color: rgba(255,255,255,0.7); }
+  .header-top-right {
     display: flex;
     flex-direction: column;
-    gap: 4px;
     align-items: flex-end;
+    gap: 10px;
+  }
+  .header-main {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .header-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
   }
   .header-date {
-    font-size: 13px;
-    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
   }
   .header-badge {
     display: inline-block;
-    background: rgba(255,255,255,0.12);
-    color: rgba(255,255,255,0.9);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .06em;
-    padding: 4px 10px;
+    background: rgba(255,255,255,0.16);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 14px;
     border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
   }
+  .header-author { font-size: 12.5px; color: rgba(255,255,255,0.85); }
   .header-nav {
     display: flex;
     gap: 8px;
-    margin-bottom: 6px;
   }
   .header-nav a {
     display: inline-block;
-    font-size: 12.5px;
+    font-size: 12px;
     font-weight: 500;
-    padding: 6px 14px;
+    padding: 5px 12px;
     border-radius: 20px;
     text-decoration: none;
-    border: 1px solid rgba(255,255,255,0.35);
-    color: #fff;
-    transition: background .15s ease;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.8);
+    transition: .15s;
   }
   .header-nav a.active {
-    background: #fff;
-    color: var(--accent);
-    font-weight: 700;
-    border-color: #fff;
+    background: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.5);
+    color: #fff;
+    font-weight: 600;
   }
-  .header-nav a:not(.active):hover {
-    background: rgba(255,255,255,0.10);
+  .header-nav a:hover:not(.active) {
+    border-color: rgba(255,255,255,0.6);
+    color: #fff;
   }
 
   /* ---- Layout ---- */
@@ -384,8 +408,11 @@
   }
 
   @media (max-width: 700px) {
-    .header { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
-    .header-meta { text-align: left; align-items: flex-start; }
+    .header-inner { padding: 18px 1.25rem 24px; }
+    .header-top { flex-direction: column; gap: 10px; }
+    .header-top-right { align-items: flex-start; }
+    .header-main { flex-direction: column; align-items: flex-start; }
+    .header-side { align-items: flex-start; }
     .main { padding: 1.5rem; }
     .beneficios-grid { grid-template-columns: 1fr; }
     .header-title { font-size: 1.5rem; }
@@ -549,18 +576,24 @@ const DATA = {
      ============================================================ -->
 
 <header class="header">
-  <div class="header-brand">
-    <span class="header-eyebrow">Grupo Boldt · Recursos Humanos</span>
-    <h1 class="header-title">Dashboard <em>— Administración de Recursos Humanos</em></h1>
-  </div>
-  <div class="header-meta">
-    <div class="header-nav">
-      <a href="https://rrhh-boldt.vercel.app/" class="active">Administración</a>
-      <a href="https://boldt-talento.vercel.app/">Talento</a>
+  <div class="header-inner">
+    <div class="header-top">
+      <span class="header-eyebrow">Grupo Boldt · Recursos Humanos</span>
+      <div class="header-top-right">
+        <div class="header-nav">
+          <a href="https://rrhh-boldt.vercel.app/" class="active">Administración</a>
+          <a href="https://boldt-talento.vercel.app/">Talento</a>
+        </div>
+        <span class="header-date" id="hdr-actualizacion"></span>
+      </div>
     </div>
-    <span class="header-date" id="hdr-actualizacion"></span>
-    <span class="header-badge" id="hdr-periodo"></span>
-    <span class="header-date" id="hdr-consultor" style="margin-top:2px"></span>
+    <div class="header-main">
+      <h1 class="header-title"><span class="header-bold">Dashboard</span> <span class="header-dash">—</span> <em>Administración de Recursos Humanos</em></h1>
+      <div class="header-side">
+        <span class="header-badge" id="hdr-periodo"></span>
+        <span class="header-author" id="hdr-consultor"></span>
+      </div>
+    </div>
   </div>
 </header>
 
