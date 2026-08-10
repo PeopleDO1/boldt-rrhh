@@ -29,6 +29,8 @@
     --warn-light: #FFF1E2;
     --ok: #2D7A5F;
     --ok-light: #E8F2EE;
+    --danger: #D64545;
+    --danger-light: #FBEAEA;
     --border: rgba(26,25,22,0.16);
     --border2: rgba(26,25,22,0.10);
     --r: 12px;
@@ -318,7 +320,7 @@
   }
   .dot-done { background: var(--ok); }
   .dot-active { background: var(--warn); }
-  .dot-pending { background: var(--border); border: 1.5px solid var(--ink3); }
+  .dot-pending { background: var(--danger); border: 1.5px solid var(--danger); }
 
   /* ---- Litigios ---- */
   .litigio-card {
@@ -380,9 +382,9 @@ const DATA = {
   consultor: "Patricio Vezza — People DO HR Consulting",
 
   /* ---- KPIs resumen ---- */
-  totalEmpleados: 1011,
+  totalEmpleados: 1012,
   empresas: 11,
-  empleadosAtsa: 40,
+  empleadosAtsa: 41,
   convenioCount: 3,          // cantidad de empresas con CCT
 
   /* ---- Nómina por empresa ---- */
@@ -393,7 +395,7 @@ const DATA = {
     { nombre: "Boldt Impresores",      empleados: 87,  cct: true,  detalle: "CCT vigente" },
     { nombre: "UTE Bold Digital",      empleados: 74,  cct: false, detalle: "BPlay" },
     { nombre: "SPTI",                  empleados: 64,  cct: false, detalle: "" },
-    { nombre: "ATSA",                  empleados: 40,  cct: false, detalle: "Integrándose" },
+    { nombre: "ATSA",                  empleados: 41,  cct: false, detalle: "Integrándose" },
     { nombre: "Orbith",                empleados: 44,  cct: false, detalle: "" },
     { nombre: "Boldt Tech",            empleados: 43,  cct: false, detalle: "" },
     { nombre: "UTE Boldt Gaming",      empleados: 38,  cct: false, detalle: "BPlay" },
@@ -461,12 +463,14 @@ const DATA = {
         { texto: "Cobertura médica: 3 empleados rinden factura — en análisis", estado: "active" },
         { texto: "Bono Viaje: comunicar a líderes de Operaciones para revisión y posterior comunicación a empleados", estado: "active" },
         { texto: "Política de gastos con tarjeta corporativa: documento elaborado, en revisión previo a envío a Legales", estado: "active" },
+        { texto: "Préstamo a empleado ATSA (primer antecedente): en proceso, depósito previsto viernes 14/8", estado: "active" },
         { texto: "Comunicación a equipos",             estado: "pending" },
         { texto: "Legajos físicos organizados",        estado: "pending" },
         { texto: "Desarrollar contratos Swiss Medical y Omint", estado: "pending" },
         { texto: "Celulares: flota a coordinar con Deborah (Compras) — Resp: Tecnología (Willy Euman)", estado: "pending" },
         { texto: "Onboarding: implementar para todos los empleados desde 1/10/2026", estado: "pending" },
         { texto: "Guardia pasiva: acta/acuerdo firmado por los empleados; reunión con Víctor el 16/6 — Realizado OK", estado: "done" },
+        { texto: "Poder Laboral para ATSA: ya en poder de Rodo — Realizado OK", estado: "done" },
         { texto: "Blot: queda en ATSA, fuera de convenio, sueldo a $1.8M, naming Analista Administrativo — Realizado OK", estado: "done" },
         { texto: "Gastos no rendidos — Diego R.: apercibimiento verbal realizado, caso cerrado", estado: "done" },
         { texto: "Uso indebido de tarjeta corporativa: empleado identificado, visita a Córdoba y comunicación de desvinculación — Realizado OK", estado: "done" },
@@ -492,6 +496,8 @@ const DATA = {
       hitos: [
         { texto: "Definición alcance con M. Ferrante",  estado: "active"  },
         { texto: "Análisis de costo Visma — solicitado por Jonatan", estado: "active" },
+        { texto: "Esperando definición de Ferrante para el plan de migración", estado: "active" },
+        { texto: "Notificar al estudio contable la baja del servicio (con 3 meses de anticipación)", estado: "pending" },
         { texto: "Matriz MasterFile como insumo base",  estado: "pending" },
         { texto: "Liquidación paralela (julio 2026)",   estado: "pending" },
         { texto: "Go-live con Crowe (noviembre 2026)",  estado: "pending" },
@@ -639,12 +645,12 @@ const DATA = {
   reBar.innerHTML = `
     <div class="progreso-seg" style="width:${pctDone}%;background:var(--ok)"></div>
     <div class="progreso-seg" style="width:${pctActive}%;background:var(--warn)"></div>
-    <div class="progreso-seg" style="width:${pctPending}%;background:var(--border)"></div>
+    <div class="progreso-seg" style="width:${pctPending}%;background:var(--danger)"></div>
   `;
   document.getElementById('resumen-ejecutivo-legend').innerHTML = `
     <div class="progreso-legend-item"><span class="progreso-legend-dot" style="background:var(--ok)"></span>Finalizados — ${doneHitos} (${pctDone}%)</div>
     <div class="progreso-legend-item"><span class="progreso-legend-dot" style="background:var(--warn)"></span>En curso — ${activeHitos} (${pctActive}%)</div>
-    <div class="progreso-legend-item"><span class="progreso-legend-dot" style="background:var(--ink3)"></span>Pendientes — ${pendingHitos} (${pctPending}%)</div>
+    <div class="progreso-legend-item"><span class="progreso-legend-dot" style="background:var(--danger)"></span>Pendientes — ${pendingHitos} (${pctPending}%)</div>
   `;
 
   /* ---- Métricas resumen ---- */
@@ -836,27 +842,27 @@ const DATA = {
             <div style="font-size:11px;color:var(--ink3);margin-top:2px">Total</div>
           </div>
           <div style="flex:1;text-align:center;background:var(--surface);border-radius:6px;padding:8px 4px;">
-            <div style="font-size:22px;font-weight:700;color:#22c55e">${done}</div>
+            <div style="font-size:22px;font-weight:700;color:var(--ok)">${done}</div>
             <div style="font-size:11px;color:var(--ink3);margin-top:2px">Finalizados</div>
           </div>
           <div style="flex:1;text-align:center;background:var(--surface);border-radius:6px;padding:8px 4px;">
-            <div style="font-size:22px;font-weight:700;color:#3b82f6">${active}</div>
+            <div style="font-size:22px;font-weight:700;color:var(--warn)">${active}</div>
             <div style="font-size:11px;color:var(--ink3);margin-top:2px">En curso</div>
           </div>
           <div style="flex:1;text-align:center;background:var(--surface);border-radius:6px;padding:8px 4px;">
-            <div style="font-size:22px;font-weight:700;color:var(--ink3)">${pending}</div>
+            <div style="font-size:22px;font-weight:700;color:var(--danger)">${pending}</div>
             <div style="font-size:11px;color:var(--ink3);margin-top:2px">Pendientes</div>
           </div>
         </div>
         <div style="height:8px;border-radius:4px;overflow:hidden;display:flex;gap:2px">
-          <div style="width:${pctDone}%;background:#22c55e;border-radius:4px 0 0 4px;transition:width .3s"></div>
-          <div style="width:${pctActive}%;background:#3b82f6;transition:width .3s"></div>
-          <div style="width:${pctPending}%;background:var(--border2);border-radius:0 4px 4px 0;transition:width .3s"></div>
+          <div style="width:${pctDone}%;background:var(--ok);border-radius:4px 0 0 4px;transition:width .3s"></div>
+          <div style="width:${pctActive}%;background:var(--warn);transition:width .3s"></div>
+          <div style="width:${pctPending}%;background:var(--danger);border-radius:0 4px 4px 0;transition:width .3s"></div>
         </div>
         <div style="display:flex;gap:14px;margin-top:6px;font-size:11px;color:var(--ink3)">
-          <span>✅ ${pctDone}% completado</span>
-          <span>🔵 ${pctActive}% en curso</span>
-          <span>⬜ ${pctPending}% pendiente</span>
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:4px"></span>${pctDone}% completado</span>
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warn);margin-right:4px"></span>${pctActive}% en curso</span>
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);margin-right:4px"></span>${pctPending}% pendiente</span>
         </div>
       </div>`;
     pl.innerHTML += `<div class="proyecto-card">
