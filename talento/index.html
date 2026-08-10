@@ -591,11 +591,12 @@ function render(){
     <div class="progress-bar">
       <div class="progress-seg" style="width:${stats.pctCerrado}%;background:var(--cerrado)"></div>
       <div class="progress-seg" style="width:${stats.pctCurso}%;background:var(--curso)"></div>
+      <div class="progress-seg" style="width:${stats.pctPend}%;background:#D64545"></div>
     </div>
     <div class="progress-legend">
       <span><i style="background:var(--cerrado)"></i>Finalizados — ${stats.cerrado} (${stats.pctCerrado}%)</span>
       <span><i style="background:var(--curso)"></i>En curso — ${stats.curso} (${stats.pctCurso}%)</span>
-      <span><i style="background:#d1d5db"></i>Pendientes — ${stats.pend} (${stats.pctPend}%)</span>
+      <span><i style="background:#D64545"></i>Pendientes — ${stats.pend} (${stats.pctPend}%)</span>
     </div>
 
     <div class="filters">
